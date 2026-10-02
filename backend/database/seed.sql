@@ -36,8 +36,8 @@ ON DUPLICATE KEY UPDATE `description` = VALUES(`description`);
 -- Default Password: Admin@123456 (bcrypt hash, 10 rounds)
 -- ---------------------------------------------------------------------
 INSERT INTO `users` (`id`, `role_id`, `username`, `email`, `password_hash`, `is_active`) VALUES
-(1, 1, 'admin', 'admin@hospital.com', '$2b$10$3euPcmQFCiblsZeEu5s7p.eT7v4uYhFf9Lq1oYcM5cWkWd5g6Q8bK', TRUE)
-ON DUPLICATE KEY UPDATE `email` = VALUES(`email`);
+(1, 1, 'admin', 'admin@hospital.com', '$2a$10$LdZlaqZkB5PxrSNz3ImSb.biXmpEbJK5RvVzzG7Rv0wV785SMYfDy', TRUE)
+ON DUPLICATE KEY UPDATE `email` = VALUES(`email`), `password_hash` = VALUES(`password_hash`);
 
 -- Link default admin user to an Employee profile
 INSERT INTO `employees` (`id`, `user_id`, `department_id`, `employee_code`, `first_name`, `last_name`, `gender`, `phone`, `email`, `designation`, `hire_date`, `salary`, `status`) VALUES
