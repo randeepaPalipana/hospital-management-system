@@ -16,6 +16,7 @@ import Pharmacy from './pages/Pharmacy';
 import Billing from './pages/Billing';
 import Staff from './pages/Staff';
 import Reports from './pages/Reports';
+import UsersSecurity from './pages/UsersSecurity';
 import Unauthorized from './pages/Unauthorized';
 import NotFound from './pages/NotFound';
 
@@ -51,7 +52,7 @@ function App() {
             <Route path="billing" element={<Billing />} />
             <Route path="staff" element={<Staff />} />
             <Route path="reports" element={<Reports />} />
-            <Route path="users/*" element={<div className="p-4 bg-white rounded-xl border border-slate-200"><h2 className="text-xl font-bold">System User Security (Admin)</h2></div>} />
+            <Route path="users" element={<UsersSecurity />} />
           </Route>
 
           {/* 404 Fallback */}
