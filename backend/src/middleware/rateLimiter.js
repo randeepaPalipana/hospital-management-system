@@ -27,13 +27,14 @@ const apiLimiter = rateLimit({
  */
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 15, // Limit each IP to 15 authentication attempts
+  max: process.env.NODE_ENV === 'production' ? 15 : 100, // 100 in dev/testing, 15 in prod
+  skipSuccessfulRequests: true, // Only count failed login attempts towards brute force limit!
   standardHeaders: true,
   legacyHeaders: false,
   handler: (req, res) => {
     return errorResponse(
       res,
-      'Too many authentication attempts detected. This IP address is temporarily throttled for 15 minutes.',
+      'Too many failed authentication attempts detected. This IP address is temporarily throttled for 15 minutes.',
       null,
       429
     );
