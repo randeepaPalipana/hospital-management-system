@@ -10,10 +10,10 @@ router.use(authenticate);
 // Executive Summary / Dashboard overview (All authenticated roles)
 router.get('/summary', ReportController.getExecutiveSummary);
 
-// Financial reports (Admin, Billing)
+// Financial reports (Admin, Accountant)
 router.get(
   '/financial',
-  authorize('Administrator', 'Cashier'),
+  authorize('Administrator', 'Accountant'),
   ReportController.getFinancialReport
 );
 
@@ -24,10 +24,10 @@ router.get(
   ReportController.getPatientReport
 );
 
-// Laboratory diagnostics statistics (Admin, Lab Technician, Doctor)
+// Laboratory diagnostics statistics (Admin, Laboratory Staff, Doctor)
 router.get(
   '/laboratory',
-  authorize('Administrator', 'Lab Technician', 'Doctor'),
+  authorize('Administrator', 'Laboratory Staff', 'Doctor'),
   ReportController.getLaboratoryReport
 );
 
