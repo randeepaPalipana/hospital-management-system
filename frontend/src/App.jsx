@@ -14,6 +14,7 @@ import MedicalRecords from './pages/MedicalRecords';
 import Laboratory from './pages/Laboratory';
 import Pharmacy from './pages/Pharmacy';
 import Billing from './pages/Billing';
+import Staff from './pages/Staff';
 import Unauthorized from './pages/Unauthorized';
 import NotFound from './pages/NotFound';
 
@@ -47,7 +48,7 @@ function App() {
             <Route path="laboratory" element={<Laboratory />} />
             <Route path="pharmacy" element={<Pharmacy />} />
             <Route path="billing" element={<Billing />} />
-            <Route path="staff/*" element={<div className="p-4 bg-white rounded-xl border border-slate-200"><h2 className="text-xl font-bold">Staff & HR Management (Phase 15)</h2></div>} />
+            <Route path="staff" element={<Staff />} />
             <Route path="reports/*" element={<div className="p-4 bg-white rounded-xl border border-slate-200"><h2 className="text-xl font-bold">Reports & Analytics (Phase 16)</h2></div>} />
             <Route path="users/*" element={<div className="p-4 bg-white rounded-xl border border-slate-200"><h2 className="text-xl font-bold">System User Security (Admin)</h2></div>} />
           </Route>
