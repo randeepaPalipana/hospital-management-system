@@ -70,6 +70,7 @@ const laboratoryRoutes = require('./routes/laboratoryRoutes');
 const pharmacyRoutes = require('./routes/pharmacyRoutes');
 const billingRoutes = require('./routes/billingRoutes');
 const staffRoutes = require('./routes/staffRoutes');
+const reportRoutes = require('./routes/reportRoutes');
 
 // API v1 Routes
 app.use('/api/v1/auth', authRoutes);
@@ -83,6 +84,7 @@ app.use('/api/v1/laboratory', laboratoryRoutes);
 app.use('/api/v1/pharmacy', pharmacyRoutes);
 app.use('/api/v1/billing', billingRoutes);
 app.use('/api/v1/staff', staffRoutes);
+app.use('/api/v1/reports', reportRoutes);
 
 // Root welcome route
 app.get('/', (req, res) => {
