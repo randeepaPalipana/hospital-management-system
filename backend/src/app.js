@@ -68,6 +68,7 @@ const appointmentRoutes = require('./routes/appointmentRoutes');
 const medicalRecordRoutes = require('./routes/medicalRecordRoutes');
 const laboratoryRoutes = require('./routes/laboratoryRoutes');
 const pharmacyRoutes = require('./routes/pharmacyRoutes');
+const billingRoutes = require('./routes/billingRoutes');
 
 // API v1 Routes
 app.use('/api/v1/auth', authRoutes);
@@ -79,6 +80,7 @@ app.use('/api/v1/appointments', appointmentRoutes);
 app.use('/api/v1/medical-records', medicalRecordRoutes);
 app.use('/api/v1/laboratory', laboratoryRoutes);
 app.use('/api/v1/pharmacy', pharmacyRoutes);
+app.use('/api/v1/billing', billingRoutes);
 
 // Root welcome route
 app.get('/', (req, res) => {
