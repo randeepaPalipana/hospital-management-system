@@ -65,6 +65,7 @@ const patientRoutes = require('./routes/patientRoutes');
 const departmentRoutes = require('./routes/departmentRoutes');
 const doctorRoutes = require('./routes/doctorRoutes');
 const appointmentRoutes = require('./routes/appointmentRoutes');
+const medicalRecordRoutes = require('./routes/medicalRecordRoutes');
 
 // API v1 Routes
 app.use('/api/v1/auth', authRoutes);
@@ -73,6 +74,7 @@ app.use('/api/v1/patients', patientRoutes);
 app.use('/api/v1/departments', departmentRoutes);
 app.use('/api/v1/doctors', doctorRoutes);
 app.use('/api/v1/appointments', appointmentRoutes);
+app.use('/api/v1/medical-records', medicalRecordRoutes);
 
 // Root welcome route
 app.get('/', (req, res) => {
