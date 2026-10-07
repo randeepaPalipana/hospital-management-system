@@ -62,11 +62,15 @@ app.get('/api/v1/health', (req, res) => {
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const patientRoutes = require('./routes/patientRoutes');
+const departmentRoutes = require('./routes/departmentRoutes');
+const doctorRoutes = require('./routes/doctorRoutes');
 
 // API v1 Routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/patients', patientRoutes);
+app.use('/api/v1/departments', departmentRoutes);
+app.use('/api/v1/doctors', doctorRoutes);
 
 // Root welcome route
 app.get('/', (req, res) => {
