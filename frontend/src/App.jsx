@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard';
 import Patients from './pages/Patients';
 import PatientProfile from './pages/PatientProfile';
 import Doctors from './pages/Doctors';
+import Appointments from './pages/Appointments';
 import Unauthorized from './pages/Unauthorized';
 import NotFound from './pages/NotFound';
 
@@ -37,7 +38,7 @@ function App() {
             <Route path="patients" element={<Patients />} />
             <Route path="patients/:id" element={<PatientProfile />} />
             <Route path="doctors" element={<Doctors />} />
-            <Route path="appointments/*" element={<div className="p-4 bg-white rounded-xl border border-slate-200"><h2 className="text-xl font-bold">Appointment Scheduling (Phase 10)</h2></div>} />
+            <Route path="appointments" element={<Appointments />} />
             <Route path="medical-records/*" element={<div className="p-4 bg-white rounded-xl border border-slate-200"><h2 className="text-xl font-bold">Electronic Medical Records (Phase 11)</h2></div>} />
             <Route path="laboratory/*" element={<div className="p-4 bg-white rounded-xl border border-slate-200"><h2 className="text-xl font-bold">Laboratory Diagnostics (Phase 12)</h2></div>} />
             <Route path="pharmacy/*" element={<div className="p-4 bg-white rounded-xl border border-slate-200"><h2 className="text-xl font-bold">Pharmacy & Drug Inventory (Phase 13)</h2></div>} />

@@ -10,9 +10,9 @@ const { query } = require('../config/db');
  */
 async function logAudit(req, action, entityName, entityId = null, details = null) {
   try {
-    const userId = req.user ? req.user.id : null;
-    const ipAddress = req.headers['x-forwarded-for'] || req.socket.remoteAddress || req.ip || null;
-    const userAgent = req.headers['user-agent'] ? req.headers['user-agent'].substring(0, 255) : null;
+    const userId = req?.user ? req.user.id : null;
+    const ipAddress = req?.headers?.['x-forwarded-for'] || req?.socket?.remoteAddress || req?.ip || null;
+    const userAgent = req?.headers?.['user-agent'] ? req.headers['user-agent'].substring(0, 255) : null;
     const detailsJson = details ? JSON.stringify(details) : null;
 
     const sql = `
