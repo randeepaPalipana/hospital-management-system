@@ -7,18 +7,47 @@ const path = require('path');
 
 const { notFoundHandler, globalErrorHandler } = require('./middleware/errorHandler');
 const { successResponse } = require('./utils/responseFormatter');
+const { apiLimiter } = require('./middleware/rateLimiter');
+const { sanitizeInput } = require('./middleware/sanitizeMiddleware');
 
 const app = express();
 
-// Security HTTP headers
+// Trust proxy for rate limiting behind reverse proxies/load balancers
+app.set('trust proxy', 1);
+
+// Disable X-Powered-By header to prevent fingerprinting
+app.disable('x-powered-by');
+
+// Hardened Security HTTP headers with Content Security Policy & Frame Protection
 app.use(helmet({
-  crossOriginResourcePolicy: { policy: 'cross-origin' }
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
+      imgSrc: ["'self'", "data:", "blob:"],
+      connectSrc: ["'self'", process.env.CLIENT_URL || 'http://localhost:5173'],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: process.env.NODE_ENV === 'production' ? [] : null,
+    },
+  },
+  crossOriginEmbedderPolicy: false,
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+  dnsPrefetchControl: { allow: false },
+  frameguard: { action: 'deny' },
+  hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
+  ieNoOpen: true,
+  noSniff: true,
+  referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+  xssFilter: true,
 }));
 
-// CORS configuration
+// CORS configuration (Strict whitelist & allowed methods)
 const allowedOrigins = [
   process.env.CLIENT_URL || 'http://localhost:5173',
   'http://localhost:3000',
+  'http://127.0.0.1:5173',
 ];
 
 app.use(cors({
@@ -31,7 +60,9 @@ app.use(cors({
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  exposedHeaders: ['RateLimit-Limit', 'RateLimit-Remaining', 'RateLimit-Reset'],
+  maxAge: 86400, // 24 hours pre-flight cache
 }));
 
 // Compression & Logging
@@ -40,9 +71,15 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 }
 
-// Body parsers
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+// Body parsers with defensive payload caps
+app.use(express.json({ limit: '2mb' }));
+app.use(express.urlencoded({ extended: true, limit: '2mb' }));
+
+// Input sanitization against Cross-Site Scripting (XSS)
+app.use(sanitizeInput);
+
+// Global API rate limiting
+app.use('/api', apiLimiter);
 
 // Static uploads directory
 app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
