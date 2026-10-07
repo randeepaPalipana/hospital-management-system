@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { billingService } from '../services/billingService';
+import { formatLKR } from '../utils/currencyFormatter';
 import { useAuth } from '../context/AuthContext';
 import {
   Receipt, Plus, Search, Filter, DollarSign,
@@ -159,15 +160,15 @@ const Billing = () => {
                       </td>
 
                       <td className="px-5 py-4 text-center font-mono font-semibold text-slate-800">
-                        ${parseFloat(inv.net_amount).toFixed(2)}
+                        {formatLKR(inv.net_amount)}
                       </td>
 
                       <td className="px-5 py-4 text-center font-mono text-emerald-700 font-medium">
-                        ${parseFloat(inv.paid_amount).toFixed(2)}
+                        {formatLKR(inv.paid_amount)}
                       </td>
 
                       <td className="px-5 py-4 text-center font-mono font-bold text-rose-700">
-                        ${parseFloat(inv.balance_due).toFixed(2)}
+                        {formatLKR(inv.balance_due)}
                       </td>
 
                       <td className="px-5 py-4 whitespace-nowrap">

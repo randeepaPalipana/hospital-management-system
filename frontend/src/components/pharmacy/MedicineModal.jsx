@@ -134,7 +134,7 @@ const MedicineModal = ({ medicine, onClose, onSuccess }) => {
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Unit Price ($) *</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">Unit Price (Rs.) *</label>
               <input
                 type="number"
                 step="0.01"
@@ -142,7 +142,7 @@ const MedicineModal = ({ medicine, onClose, onSuccess }) => {
                 required
                 value={form.unit_price}
                 onChange={(e) => setForm({ ...form, unit_price: e.target.value })}
-                placeholder="0.25"
+                placeholder="25.00"
                 className="w-full px-3 py-2 text-sm bg-slate-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>

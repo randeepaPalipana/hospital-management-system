@@ -3,6 +3,7 @@ import { appointmentService } from '../../services/appointmentService';
 import { patientService } from '../../services/patientService';
 import { doctorService } from '../../services/doctorService';
 import { X, Calendar, Clock, User, UserCheck, Loader2, AlertCircle } from 'lucide-react';
+import { formatLKR } from '../../utils/currencyFormatter';
 
 const AppointmentModal = ({ onClose, onSuccess }) => {
   const [patients, setPatients] = useState([]);
@@ -138,7 +139,7 @@ const AppointmentModal = ({ onClose, onSuccess }) => {
               >
                 {doctors.map((d) => (
                   <option key={d.id} value={d.id}>
-                    Dr. {d.first_name} {d.last_name} — {d.specialization} (${parseFloat(d.consultation_fee).toFixed(2)})
+                    Dr. {d.first_name} {d.last_name} — {d.specialization} ({formatLKR(d.consultation_fee)})
                   </option>
                 ))}
               </select>

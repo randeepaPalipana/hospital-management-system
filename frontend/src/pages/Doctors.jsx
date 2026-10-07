@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { doctorService, departmentService } from '../services/doctorService';
+import { formatLKR } from '../utils/currencyFormatter';
 import { useAuth } from '../context/AuthContext';
 import {
   UserCheck, Building2, Plus, Search, Calendar,
@@ -218,7 +219,7 @@ const Doctors = () => {
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-slate-400">Consultation Fee:</span>
-                        <span className="font-bold text-emerald-700">${parseFloat(doc.consultation_fee).toFixed(2)}</span>
+                        <span className="font-bold text-emerald-700">{formatLKR(doc.consultation_fee)}</span>
                       </div>
                       <div className="flex items-center justify-between">
                         <span className="text-slate-400">Clinic Room:</span>

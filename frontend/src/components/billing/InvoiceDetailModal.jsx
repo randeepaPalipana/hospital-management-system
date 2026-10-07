@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Printer, Receipt, CheckCircle2 } from 'lucide-react';
+import { formatLKR } from '../../utils/currencyFormatter';
 
 const InvoiceDetailModal = ({ invoice, onClose, onOpenPayment }) => {
   const handlePrint = () => {
@@ -87,8 +88,8 @@ const InvoiceDetailModal = ({ invoice, onClose, onOpenPayment }) => {
                   <td className="px-3 py-2.5 font-semibold text-slate-900">{item.description}</td>
                   <td className="px-3 py-2.5 capitalize text-slate-500">{item.item_type}</td>
                   <td className="px-3 py-2.5 text-center font-bold text-slate-800">{item.quantity}</td>
-                  <td className="px-3 py-2.5 text-right font-mono">${parseFloat(item.unit_price).toFixed(2)}</td>
-                  <td className="px-3 py-2.5 text-right font-mono font-bold">${parseFloat(item.total_price).toFixed(2)}</td>
+                  <td className="px-3 py-2.5 text-right font-mono">{formatLKR(item.unit_price)}</td>
+                  <td className="px-3 py-2.5 text-right font-mono font-bold">{formatLKR(item.total_price)}</td>
                 </tr>
               ))}
             </tbody>
@@ -99,31 +100,31 @@ const InvoiceDetailModal = ({ invoice, onClose, onOpenPayment }) => {
         <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5 text-xs mb-4">
           <div className="flex justify-between text-slate-600">
             <span>Gross Total:</span>
-            <span className="font-mono">${parseFloat(invoice.total_amount).toFixed(2)}</span>
+            <span className="font-mono">{formatLKR(invoice.total_amount)}</span>
           </div>
           {parseFloat(invoice.discount_amount) > 0 && (
             <div className="flex justify-between text-emerald-700">
               <span>Discount Applied:</span>
-              <span className="font-mono">-${parseFloat(invoice.discount_amount).toFixed(2)}</span>
+              <span className="font-mono">-{formatLKR(invoice.discount_amount)}</span>
             </div>
           )}
           {parseFloat(invoice.tax_amount) > 0 && (
             <div className="flex justify-between text-slate-600">
               <span>Tax / Charges:</span>
-              <span className="font-mono">+${parseFloat(invoice.tax_amount).toFixed(2)}</span>
+              <span className="font-mono">+{formatLKR(invoice.tax_amount)}</span>
             </div>
           )}
           <div className="flex justify-between text-slate-900 font-bold text-sm border-t border-slate-200 pt-1">
             <span>Net Amount:</span>
-            <span className="font-mono text-emerald-700">${parseFloat(invoice.net_amount).toFixed(2)}</span>
+            <span className="font-mono text-emerald-700">{formatLKR(invoice.net_amount)}</span>
           </div>
           <div className="flex justify-between text-slate-600">
             <span>Amount Paid:</span>
-            <span className="font-mono">${parseFloat(invoice.paid_amount).toFixed(2)}</span>
+            <span className="font-mono">{formatLKR(invoice.paid_amount)}</span>
           </div>
           <div className="flex justify-between text-rose-700 font-bold border-t border-slate-200 pt-1">
             <span>Balance Due:</span>
-            <span className="font-mono text-sm">${parseFloat(invoice.balance_due).toFixed(2)}</span>
+            <span className="font-mono text-sm">{formatLKR(invoice.balance_due)}</span>
           </div>
         </div>
 
@@ -136,7 +137,7 @@ const InvoiceDetailModal = ({ invoice, onClose, onOpenPayment }) => {
                 <div key={p.id} className="flex justify-between text-xs p-2 bg-emerald-50/50 rounded-lg border border-emerald-100">
                   <span className="font-mono font-semibold text-emerald-900">{p.receipt_number} ({p.payment_method})</span>
                   <span className="text-slate-500">{new Date(p.payment_date).toLocaleDateString()}</span>
-                  <span className="font-mono font-bold text-emerald-800">${parseFloat(p.amount).toFixed(2)}</span>
+                  <span className="font-mono font-bold text-emerald-800">{formatLKR(p.amount)}</span>
                 </div>
               ))}
             </div>

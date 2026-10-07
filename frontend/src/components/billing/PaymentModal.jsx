@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { billingService } from '../../services/billingService';
 import { X, CreditCard, DollarSign, Loader2, AlertCircle } from 'lucide-react';
+import { formatLKR } from '../../utils/currencyFormatter';
 
 const METHODS = ['Cash', 'Credit Card', 'Debit Card', 'Bank Transfer', 'Mobile Money'];
 
@@ -62,22 +63,22 @@ const PaymentModal = ({ invoice, onClose, onSuccess }) => {
         <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs space-y-1.5 mb-4">
           <div className="flex justify-between text-slate-600">
             <span>Net Invoice Total:</span>
-            <span className="font-mono font-semibold">${parseFloat(invoice.net_amount).toFixed(2)}</span>
+            <span className="font-mono font-semibold">{formatLKR(invoice.net_amount)}</span>
           </div>
           <div className="flex justify-between text-slate-600">
             <span>Already Paid:</span>
-            <span className="font-mono font-semibold">${parseFloat(invoice.paid_amount).toFixed(2)}</span>
+            <span className="font-mono font-semibold">{formatLKR(invoice.paid_amount)}</span>
           </div>
           <div className="flex justify-between text-slate-900 font-bold border-t border-slate-200 pt-1">
             <span>Outstanding Balance:</span>
-            <span className="font-mono text-rose-700 text-sm">${parseFloat(invoice.balance_due).toFixed(2)}</span>
+            <span className="font-mono text-rose-700 text-sm">{formatLKR(invoice.balance_due)}</span>
           </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">
-              Payment Amount ($) *
+              Payment Amount (Rs.) *
             </label>
             <input
               type="number"

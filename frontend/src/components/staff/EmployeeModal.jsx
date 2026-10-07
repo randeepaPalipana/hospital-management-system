@@ -210,7 +210,7 @@ const EmployeeModal = ({ employee, onClose, onSuccess }) => {
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 uppercase mb-1">Salary ($/mo)</label>
+              <label className="block text-xs font-semibold text-slate-600 uppercase mb-1">Salary (Rs./mo)</label>
               <input
                 type="number"
                 name="salary"

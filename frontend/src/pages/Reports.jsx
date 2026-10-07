@@ -6,6 +6,7 @@ import {
   TrendingUp, ArrowUpRight, ArrowDownRight, RefreshCw, AlertTriangle,
   CheckCircle2, Clock, Filter, FileText, PieChart
 } from 'lucide-react';
+import { formatLKR } from '../utils/currencyFormatter';
 
 const Reports = () => {
   const { hasRole } = useAuth();
@@ -262,10 +263,10 @@ const Reports = () => {
                   <div>
                     <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Revenue Collected</p>
                     <p className="text-3xl font-bold text-slate-900 mt-1">
-                      ${Number(summaryData.revenue?.total_collected || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                      {formatLKR(summaryData.revenue?.total_collected || 0)}
                     </p>
                     <p className="text-xs text-amber-600 font-medium mt-1">
-                      ${Number(summaryData.revenue?.outstanding_balance || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })} balance due
+                      {formatLKR(summaryData.revenue?.outstanding_balance || 0)} balance due
                     </p>
                   </div>
                   <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
@@ -411,7 +412,7 @@ const Reports = () => {
                           <span className="text-xs text-slate-500 block">{pm.count} transactions</span>
                         </div>
                         <span className="text-base font-bold text-emerald-700 font-mono">
-                          ${Number(pm.total_amount).toFixed(2)}
+                          {formatLKR(pm.total_amount)}
                         </span>
                       </div>
                     ))
@@ -434,7 +435,7 @@ const Reports = () => {
                         <span className="text-xs text-slate-500 block">{sr.count} items billed</span>
                       </div>
                       <span className="text-base font-bold text-slate-900 font-mono">
-                        ${Number(sr.total_amount).toFixed(2)}
+                        {formatLKR(sr.total_amount)}
                       </span>
                     </div>
                   ))}
@@ -453,10 +454,10 @@ const Reports = () => {
                         {inv.status} Invoices ({inv.count})
                       </span>
                       <p className="text-xl font-bold text-slate-900 mt-1 font-mono">
-                        Total: ${Number(inv.total_amount).toFixed(2)}
+                        Total: {formatLKR(inv.total_amount)}
                       </p>
                       <p className="text-xs text-rose-600 font-medium mt-1">
-                        Unpaid Balance: ${Number(inv.total_balance_due).toFixed(2)}
+                        Unpaid Balance: {formatLKR(inv.total_balance_due)}
                       </p>
                     </div>
                   ))}

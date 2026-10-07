@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { reportService } from '../services/reportService';
+import { formatLKR } from '../utils/currencyFormatter';
 import { Link } from 'react-router-dom';
 import {
   Users, Calendar, DollarSign, FlaskConical, Pill, HeartPulse,
@@ -160,10 +161,10 @@ const Dashboard = () => {
           <div>
             <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Revenue Collected</p>
             <p className="text-xl font-bold text-slate-900 mt-1 font-mono">
-              ${loading ? '...' : Number(summary?.revenue?.total_collected || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+              {loading ? '...' : formatLKR(summary?.revenue?.total_collected)}
             </p>
             <p className="text-xs text-slate-500 mt-1">
-              Billed: ${Number(summary?.revenue?.total_billed || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+              Billed: {formatLKR(summary?.revenue?.total_billed)}
             </p>
           </div>
           <div className="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center">

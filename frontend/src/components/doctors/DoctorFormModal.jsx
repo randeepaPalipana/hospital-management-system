@@ -127,9 +127,9 @@ const DoctorFormModal = ({ doctor, onClose, onSuccess }) => {
                 placeholder="e.g. MD-SLMC-2015-8821" className="w-full px-3 py-2 text-sm bg-slate-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 disabled:opacity-60" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Consultation Fee ($)</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">Consultation Fee (Rs.)</label>
               <input type="number" step="0.01" min="0" name="consultation_fee" value={form.consultation_fee} onChange={handleChange}
-                placeholder="30.00" className="w-full px-3 py-2 text-sm bg-slate-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500" />
+                placeholder="2500.00" className="w-full px-3 py-2 text-sm bg-slate-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500" />
             </div>
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1">Room / Office Number</label>

@@ -8,6 +8,7 @@ import {
 import MedicineModal from '../components/pharmacy/MedicineModal';
 import AddBatchModal from '../components/pharmacy/AddBatchModal';
 import DispenseModal from '../components/pharmacy/DispenseModal';
+import { formatLKR } from '../utils/currencyFormatter';
 
 const Pharmacy = () => {
   const { hasRole } = useAuth();
@@ -228,7 +229,7 @@ const Pharmacy = () => {
                           </td>
 
                           <td className="px-5 py-4 text-center font-mono font-medium text-slate-800">
-                            ${parseFloat(med.unit_price).toFixed(2)}
+                            {formatLKR(med.unit_price)}
                           </td>
 
                           <td className="px-5 py-4 text-center">

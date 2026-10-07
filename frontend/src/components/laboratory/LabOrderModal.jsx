@@ -3,6 +3,7 @@ import { laboratoryService } from '../../services/laboratoryService';
 import { patientService } from '../../services/patientService';
 import { doctorService } from '../../services/doctorService';
 import { X, TestTube, Loader2, AlertCircle } from 'lucide-react';
+import { formatLKR } from '../../utils/currencyFormatter';
 
 const LabOrderModal = ({ onClose, onSuccess }) => {
   const [patients, setPatients] = useState([]);
@@ -138,7 +139,7 @@ const LabOrderModal = ({ onClose, onSuccess }) => {
               >
                 {tests.map((t) => (
                   <option key={t.id} value={t.id}>
-                    {t.name} [{t.test_code}] — {t.category} (${parseFloat(t.standard_cost).toFixed(2)})
+                    {t.name} [{t.test_code}] — {t.category} ({formatLKR(t.standard_cost)})
                   </option>
                 ))}
               </select>
@@ -147,7 +148,7 @@ const LabOrderModal = ({ onClose, onSuccess }) => {
             {selectedTest && (
               <div className="p-3 bg-violet-50 border border-violet-100 rounded-xl text-xs space-y-1">
                 <p className="text-violet-900 font-semibold">{selectedTest.name}</p>
-                <p className="text-violet-700">Standard Fee: ${parseFloat(selectedTest.standard_cost).toFixed(2)}</p>
+                <p className="text-violet-700">Standard Fee: {formatLKR(selectedTest.standard_cost)}</p>
                 {selectedTest.reference_range && (
                   <p className="text-violet-600 font-mono">Reference Range: {selectedTest.reference_range} {selectedTest.unit || ''}</p>
                 )}

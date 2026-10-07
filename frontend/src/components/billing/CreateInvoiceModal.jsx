@@ -4,6 +4,7 @@ import { patientService } from '../../services/patientService';
 import {
   X, Receipt, Plus, Trash2, Loader2, AlertCircle, Sparkles, Check,
 } from 'lucide-react';
+import { formatLKR } from '../../utils/currencyFormatter';
 
 const ITEM_TYPES = [
   { value: 'consultation', label: 'Doctor Consultation' },
@@ -224,7 +225,7 @@ const CreateInvoiceModal = ({ onClose, onSuccess }) => {
                       onClick={() => handleImportUnbilled('appointment', a)}
                       className="px-2.5 py-1 bg-white hover:bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-lg text-xs font-medium"
                     >
-                      + Dr. {a.doctor_name} (${parseFloat(a.consultation_fee).toFixed(2)})
+                      + Dr. {a.doctor_name} ({formatLKR(a.consultation_fee)})
                     </button>
                   ))}
                   {unbilled.labRequests?.map((lr) => (
@@ -234,7 +235,7 @@ const CreateInvoiceModal = ({ onClose, onSuccess }) => {
                       onClick={() => handleImportUnbilled('lab', lr)}
                       className="px-2.5 py-1 bg-white hover:bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-lg text-xs font-medium"
                     >
-                      + Lab: {lr.test_name} (${parseFloat(lr.standard_cost).toFixed(2)})
+                      + Lab: {lr.test_name} ({formatLKR(lr.standard_cost)})
                     </button>
                   ))}
                   {unbilled.prescriptions?.map((pr) => (
@@ -244,7 +245,7 @@ const CreateInvoiceModal = ({ onClose, onSuccess }) => {
                       onClick={() => handleImportUnbilled('prescription', pr)}
                       className="px-2.5 py-1 bg-white hover:bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-lg text-xs font-medium"
                     >
-                      + Rx: {pr.medicine_name} (${parseFloat(pr.total_medicine_cost).toFixed(2)})
+                      + Rx: {pr.medicine_name} ({formatLKR(pr.total_medicine_cost)})
                     </button>
                   ))}
                 </div>
@@ -336,7 +337,7 @@ const CreateInvoiceModal = ({ onClose, onSuccess }) => {
             <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2 text-xs">
               <div className="flex justify-between text-slate-600">
                 <span>Subtotal Gross Charges:</span>
-                <span className="font-mono font-semibold">${grossTotal.toFixed(2)}</span>
+                <span className="font-mono font-semibold">{formatLKR(grossTotal)}</span>
               </div>
               <div className="flex justify-between items-center text-slate-600">
                 <span>Discount / Concession:</span>
@@ -362,7 +363,7 @@ const CreateInvoiceModal = ({ onClose, onSuccess }) => {
               </div>
               <div className="pt-2 border-t border-slate-200 flex justify-between text-slate-900 font-bold text-sm">
                 <span>Net Payable Amount:</span>
-                <span className="font-mono text-emerald-700 text-base">${netTotal.toFixed(2)}</span>
+                <span className="font-mono text-emerald-700 text-base">{formatLKR(netTotal)}</span>
               </div>
             </div>
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { laboratoryService } from '../services/laboratoryService';
+import { formatLKR } from '../utils/currencyFormatter';
 import { useAuth } from '../context/AuthContext';
 import {
   TestTube, Plus, Search, Filter, CheckCircle2,
@@ -303,7 +304,7 @@ const Laboratory = () => {
                     {t.reference_range ? `${t.reference_range} ${t.unit || ''}` : '—'}
                   </td>
                   <td className="px-5 py-3.5 text-right font-bold text-emerald-700">
-                    ${parseFloat(t.standard_cost).toFixed(2)}
+                    {formatLKR(t.standard_cost)}
                   </td>
                 </tr>
               ))}
