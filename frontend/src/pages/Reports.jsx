@@ -138,11 +138,18 @@ const Reports = () => {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200/80">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Reports & Hospital Analytics</h1>
-          <p className="text-sm text-slate-500 mt-0.5">
-            Real-time business intelligence across operational census, clinical performance, and revenue cycles.
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-bold text-slate-900 tracking-tight">
+              Hospital Intelligence & Operational Reports
+            </h1>
+            <span className="px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-slate-100 text-slate-600 border border-slate-200">
+              Clinical & Fiscal BI
+            </span>
+          </div>
+          <p className="text-xs text-slate-500 mt-1">
+            Real-time business intelligence across operational census, clinical performance, and revenue cycles in LKR.
           </p>
         </div>
         <button
@@ -154,37 +161,37 @@ const Reports = () => {
             if (activeTab === 'pharmacy') fetchPharmacy();
             if (activeTab === 'staff') fetchStaff();
           }}
-          className="inline-flex items-center gap-2 px-3.5 py-2 border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg text-sm font-medium shadow-xs transition self-start sm:self-auto"
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-medium shadow-xs transition-colors self-start sm:self-auto"
         >
-          <RefreshCw className="w-4 h-4 text-slate-500" />
-          Refresh Metrics
+          <RefreshCw className="w-3.5 h-3.5 text-slate-400" />
+          Refresh Analytics
         </button>
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-slate-200 gap-2 overflow-x-auto">
+      <div className="flex border-b border-slate-200/90 gap-2 overflow-x-auto text-xs font-medium">
         <button
           onClick={() => setActiveTab('summary')}
-          className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition whitespace-nowrap -mb-px ${
+          className={`flex items-center gap-2 px-3.5 py-2.5 border-b-2 transition whitespace-nowrap ${
             activeTab === 'summary'
-              ? 'border-teal-600 text-teal-600'
+              ? 'border-sky-700 text-sky-800 font-semibold'
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >
-          <BarChart3 className="w-4 h-4" />
+          <BarChart3 className="w-3.5 h-3.5" />
           Executive Overview
         </button>
 
         {hasRole('Administrator', 'Cashier') && (
           <button
             onClick={() => setActiveTab('financial')}
-            className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition whitespace-nowrap -mb-px ${
+            className={`flex items-center gap-2 px-3.5 py-2.5 border-b-2 transition whitespace-nowrap ${
               activeTab === 'financial'
-                ? 'border-teal-600 text-teal-600'
+                ? 'border-sky-700 text-sky-800 font-semibold'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
-            <DollarSign className="w-4 h-4" />
+            <DollarSign className="w-3.5 h-3.5" />
             Financial & Invoicing
           </button>
         )}
@@ -192,13 +199,13 @@ const Reports = () => {
         {hasRole('Administrator', 'Doctor', 'Nurse') && (
           <button
             onClick={() => setActiveTab('patients')}
-            className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition whitespace-nowrap -mb-px ${
+            className={`flex items-center gap-2 px-3.5 py-2.5 border-b-2 transition whitespace-nowrap ${
               activeTab === 'patients'
-                ? 'border-teal-600 text-teal-600'
+                ? 'border-sky-700 text-sky-800 font-semibold'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
-            <Users className="w-4 h-4" />
+            <Users className="w-3.5 h-3.5" />
             Demographics & Census
           </button>
         )}
@@ -206,13 +213,13 @@ const Reports = () => {
         {hasRole('Administrator', 'Doctor', 'Lab Technician', 'Receptionist') && (
           <button
             onClick={() => setActiveTab('clinical')}
-            className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition whitespace-nowrap -mb-px ${
+            className={`flex items-center gap-2 px-3.5 py-2.5 border-b-2 transition whitespace-nowrap ${
               activeTab === 'clinical'
-                ? 'border-teal-600 text-teal-600'
+                ? 'border-sky-700 text-sky-800 font-semibold'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
-            <FlaskConical className="w-4 h-4" />
+            <FlaskConical className="w-3.5 h-3.5" />
             Clinical & Lab Volumes
           </button>
         )}
@@ -220,13 +227,13 @@ const Reports = () => {
         {hasRole('Administrator', 'Pharmacist') && (
           <button
             onClick={() => setActiveTab('pharmacy')}
-            className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition whitespace-nowrap -mb-px ${
+            className={`flex items-center gap-2 px-3.5 py-2.5 border-b-2 transition whitespace-nowrap ${
               activeTab === 'pharmacy'
-                ? 'border-teal-600 text-teal-600'
+                ? 'border-sky-700 text-sky-800 font-semibold'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
-            <Pill className="w-4 h-4" />
+            <Pill className="w-3.5 h-3.5" />
             Pharmacy & Formulary
           </button>
         )}
@@ -234,20 +241,20 @@ const Reports = () => {
         {hasRole('Administrator') && (
           <button
             onClick={() => setActiveTab('staff')}
-            className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition whitespace-nowrap -mb-px ${
+            className={`flex items-center gap-2 px-3.5 py-2.5 border-b-2 transition whitespace-nowrap ${
               activeTab === 'staff'
-                ? 'border-teal-600 text-teal-600'
+                ? 'border-sky-700 text-sky-800 font-semibold'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
-            <UserCheck className="w-4 h-4" />
+            <UserCheck className="w-3.5 h-3.5" />
             Staff & HR Analytics
           </button>
         )}
       </div>
 
       {error && (
-        <div className="p-4 bg-rose-50 border border-rose-200 text-rose-700 text-sm rounded-lg flex items-center gap-2">
+        <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-lg flex items-center gap-2">
           <AlertTriangle className="w-5 h-5 shrink-0" />
           <span>{error}</span>
         </div>

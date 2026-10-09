@@ -60,19 +60,23 @@ const Billing = () => {
   return (
     <div className="space-y-5">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200/80">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <Receipt className="w-7 h-7 text-emerald-600" />
-            Billing, Invoices & Payments
-          </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
-            Hospital consultation charges, laboratory investigations, pharmacy medication bills, and settlement receipts.
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-bold text-slate-900 tracking-tight">
+              Hospital Billing, Invoices & Cashier
+            </h1>
+            <span className="px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-slate-100 text-slate-600 border border-slate-200">
+              Cashier & Settlement
+            </span>
+          </div>
+          <p className="text-xs text-slate-500 mt-1">
+            Consultation tariffs, diagnostic laboratory orders, pharmacy medication invoices, and payment receipts in LKR.
           </p>
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm shadow-sm shadow-emerald-600/20"
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-medium text-xs shadow-xs transition-colors"
         >
           <Plus className="w-4 h-4" />
           Generate Invoice
@@ -80,63 +84,64 @@ const Billing = () => {
       </div>
 
       {/* Filter Bar */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-4 flex flex-wrap gap-3 items-center justify-between">
+      <div className="bg-white rounded-xl border border-slate-200/90 p-3 flex flex-wrap gap-2.5 items-center justify-between text-xs">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold text-slate-600">Filter by Status:</span>
+          <span className="text-slate-500 font-medium">Settlement Status:</span>
           <select
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
-            className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700 focus:outline-none focus:ring-1 focus:ring-sky-500"
           >
             <option value="">All Invoices</option>
             <option value="unpaid">Unpaid</option>
             <option value="partially_paid">Partially Paid</option>
-            <option value="paid">Paid</option>
+            <option value="paid">Paid in Full</option>
           </select>
         </div>
         <button
           onClick={fetchInvoices}
-          className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl"
+          className="p-1.5 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg border border-slate-200 transition-colors"
+          title="Refresh ledger"
         >
-          <RefreshCw className="w-4 h-4" />
+          <RefreshCw className="w-3.5 h-3.5" />
         </button>
       </div>
 
       {error && (
-        <div className="p-4 bg-rose-50 border border-rose-200 text-rose-700 rounded-2xl text-sm">{error}</div>
+        <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 rounded-lg text-xs">{error}</div>
       )}
 
       {/* Table */}
-      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+      <div className="bg-white rounded-xl border border-slate-200/90 overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-slate-50 border-b border-slate-200">
+          <table className="w-full text-xs">
+            <thead className="bg-slate-50/80 border-b border-slate-200 text-slate-500 uppercase tracking-wider text-[11px] font-semibold">
               <tr>
-                <th className="px-5 py-3 text-left font-semibold text-slate-600 text-xs uppercase tracking-wider">Invoice #</th>
-                <th className="px-5 py-3 text-left font-semibold text-slate-600 text-xs uppercase tracking-wider">Patient Details</th>
-                <th className="px-5 py-3 text-center font-semibold text-slate-600 text-xs uppercase tracking-wider">Net Amount</th>
-                <th className="px-5 py-3 text-center font-semibold text-slate-600 text-xs uppercase tracking-wider">Amount Paid</th>
-                <th className="px-5 py-3 text-center font-semibold text-slate-600 text-xs uppercase tracking-wider">Balance Due</th>
-                <th className="px-5 py-3 text-left font-semibold text-slate-600 text-xs uppercase tracking-wider">Status</th>
-                <th className="px-5 py-3 text-right font-semibold text-slate-600 text-xs uppercase tracking-wider">Action</th>
+                <th className="px-4 py-2.5 text-left">Invoice # / Date</th>
+                <th className="px-4 py-2.5 text-left">Patient Details</th>
+                <th className="px-4 py-2.5 text-right">Net Amount</th>
+                <th className="px-4 py-2.5 text-right">Settled Amount</th>
+                <th className="px-4 py-2.5 text-right">Balance Due</th>
+                <th className="px-4 py-2.5 text-left">Status</th>
+                <th className="px-4 py-2.5 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-100 text-slate-700">
               {loading ? (
                 Array.from({ length: 4 }).map((_, i) => (
                   <tr key={i}>
                     {Array.from({ length: 7 }).map((__, j) => (
-                      <td key={j} className="px-5 py-4">
-                        <div className="h-4 bg-slate-100 rounded animate-pulse"></div>
+                      <td key={j} className="px-4 py-3">
+                        <div className="h-3.5 bg-slate-100 rounded animate-pulse"></div>
                       </td>
                     ))}
                   </tr>
                 ))
               ) : invoices.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-5 py-12 text-center text-slate-400">
-                    <Receipt className="w-12 h-12 mx-auto mb-2 opacity-30" />
-                    <p className="font-semibold text-slate-600">No invoices found</p>
+                  <td colSpan={7} className="px-4 py-12 text-center text-slate-400">
+                    <Receipt className="w-10 h-10 mx-auto mb-2 opacity-30 text-slate-500" />
+                    <p className="font-semibold text-slate-700 text-sm">No Invoices Found</p>
                     <p className="text-xs text-slate-400 mt-1">Generate invoices for completed consultations, labs, and medicines.</p>
                   </td>
                 </tr>
@@ -144,54 +149,64 @@ const Billing = () => {
                 invoices.map((inv) => {
                   const statusInfo = STATUS_CONFIG[inv.status] || STATUS_CONFIG.unpaid;
                   return (
-                    <tr key={inv.id} className="hover:bg-slate-50 transition-colors">
-                      <td className="px-5 py-4 whitespace-nowrap">
-                        <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-100">
+                    <tr key={inv.id} className="hover:bg-slate-50/70 transition-colors">
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <span className="font-mono text-[11px] font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-800 border border-slate-200">
                           {inv.invoice_number}
                         </span>
-                        <p className="text-xs text-slate-500 mt-1">{new Date(inv.created_at).toLocaleDateString()}</p>
+                        <p className="text-[11px] text-slate-400 font-mono mt-1">
+                          {new Date(inv.created_at).toLocaleDateString('en-GB', {
+                            day: '2-digit',
+                            month: 'short',
+                            year: 'numeric',
+                          })}
+                        </p>
                       </td>
 
-                      <td className="px-5 py-4">
+                      <td className="px-4 py-3">
                         <p className="font-semibold text-slate-900 leading-tight">
                           {inv.patient_first_name} {inv.patient_last_name}
                         </p>
-                        <p className="text-xs text-slate-500 font-mono mt-0.5">{inv.patient_mrn} • {inv.patient_phone}</p>
+                        <p className="text-[11px] text-slate-500 font-mono mt-0.5">{inv.patient_mrn} • {inv.patient_phone}</p>
                       </td>
 
-                      <td className="px-5 py-4 text-center font-mono font-semibold text-slate-800">
+                      <td className="px-4 py-3 text-right font-mono font-semibold text-slate-900">
                         {formatLKR(inv.net_amount)}
                       </td>
 
-                      <td className="px-5 py-4 text-center font-mono text-emerald-700 font-medium">
+                      <td className="px-4 py-3 text-right font-mono font-medium text-emerald-800">
                         {formatLKR(inv.paid_amount)}
                       </td>
 
-                      <td className="px-5 py-4 text-center font-mono font-bold text-rose-700">
-                        {formatLKR(inv.balance_due)}
+                      <td className="px-4 py-3 text-right font-mono font-bold text-slate-900">
+                        {inv.balance_due > 0 ? (
+                          <span className="text-rose-700">{formatLKR(inv.balance_due)}</span>
+                        ) : (
+                          <span className="text-slate-400">Rs. 0.00</span>
+                        )}
                       </td>
 
-                      <td className="px-5 py-4 whitespace-nowrap">
-                        <span className={`px-2.5 py-1 rounded-full text-xs font-bold border ${statusInfo.color}`}>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <span className={`px-2 py-0.5 rounded text-[11px] font-medium border ${statusInfo.color}`}>
                           {statusInfo.label}
                         </span>
                       </td>
 
-                      <td className="px-5 py-4 text-right whitespace-nowrap">
+                      <td className="px-4 py-3 text-right whitespace-nowrap">
                         <div className="flex items-center justify-end gap-1.5">
                           <button
                             onClick={() => handleOpenDetail(inv.id)}
-                            className="p-1.5 text-slate-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg"
+                            className="p-1.5 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded border border-slate-200 transition-colors"
                             title="View Invoice"
                           >
-                            <Eye className="w-4 h-4" />
+                            <Eye className="w-3.5 h-3.5" />
                           </button>
                           {inv.status !== 'paid' && (
                             <button
                               onClick={() => setPaymentInvoice(inv)}
-                              className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold"
+                              className="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-800 text-white rounded text-xs font-medium transition-colors"
                             >
-                              Pay
+                              Receive Payment
                             </button>
                           )}
                         </div>

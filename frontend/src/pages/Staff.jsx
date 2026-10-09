@@ -137,18 +137,25 @@ const Staff = () => {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200/80">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Staff & Human Resources</h1>
-          <p className="text-sm text-slate-500 mt-0.5">
-            Manage employee directories, daily staff attendance rosters, and leave approvals.
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-bold text-slate-900 tracking-tight">
+              Hospital Staff & Human Resources
+            </h1>
+            <span className="px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-slate-100 text-slate-600 border border-slate-200">
+              Workforce Roster
+            </span>
+          </div>
+          <p className="text-xs text-slate-500 mt-1">
+            Clinical and administrative personnel directory, daily duty attendance, and leave approval workflows.
           </p>
         </div>
         <div className="flex items-center gap-2">
           {activeTab === 'employees' && hasRole('Administrator') && (
             <button
               onClick={() => { setSelectedEmployee(null); setShowEmployeeModal(true); }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg text-sm font-medium shadow-sm transition"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-medium text-xs shadow-xs transition-colors"
             >
               <Plus className="w-4 h-4" />
               Add Employee
@@ -157,7 +164,7 @@ const Staff = () => {
           {activeTab === 'leaves' && (
             <button
               onClick={() => setShowLeaveModal(true)}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg text-sm font-medium shadow-sm transition"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-medium text-xs shadow-xs transition-colors"
             >
               <Plus className="w-4 h-4" />
               Apply Leave
@@ -167,45 +174,45 @@ const Staff = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-slate-200 gap-2">
+      <div className="flex border-b border-slate-200/90 text-xs font-medium">
         <button
           onClick={() => setActiveTab('employees')}
-          className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition -mb-px ${
+          className={`flex items-center gap-2 px-4 py-2.5 border-b-2 transition-colors ${
             activeTab === 'employees'
-              ? 'border-teal-600 text-teal-600'
+              ? 'border-sky-700 text-sky-800 font-semibold'
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >
-          <Users className="w-4 h-4" />
+          <Users className="w-3.5 h-3.5" />
           Staff Directory ({employees.length})
         </button>
         <button
           onClick={() => setActiveTab('attendance')}
-          className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition -mb-px ${
+          className={`flex items-center gap-2 px-4 py-2.5 border-b-2 transition-colors ${
             activeTab === 'attendance'
-              ? 'border-teal-600 text-teal-600'
+              ? 'border-sky-700 text-sky-800 font-semibold'
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >
-          <CalendarCheck className="w-4 h-4" />
-          Daily Attendance
+          <CalendarCheck className="w-3.5 h-3.5" />
+          Duty Attendance
         </button>
         <button
           onClick={() => setActiveTab('leaves')}
-          className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition -mb-px ${
+          className={`flex items-center gap-2 px-4 py-2.5 border-b-2 transition-colors ${
             activeTab === 'leaves'
-              ? 'border-teal-600 text-teal-600'
+              ? 'border-sky-700 text-sky-800 font-semibold'
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >
-          <CalendarDays className="w-4 h-4" />
-          Leave Requests ({leaves.length})
+          <CalendarDays className="w-3.5 h-3.5" />
+          Leave Approvals ({leaves.length})
         </button>
       </div>
 
       {error && (
-        <div className="p-4 bg-rose-50 border border-rose-200 text-rose-700 text-sm rounded-lg flex items-center gap-2">
-          <AlertCircle className="w-5 h-5 shrink-0" />
+        <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-lg flex items-center gap-2">
+          <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{error}</span>
         </div>
       )}

@@ -45,56 +45,58 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-sky-950 flex items-center justify-center p-4">
-      <div className="max-w-md w-full">
+    <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
+      <div className="max-w-sm w-full">
         {/* Hospital Branding Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-tr from-sky-500 to-teal-400 text-white shadow-lg shadow-sky-500/30 mb-4">
-            <Activity className="w-10 h-10" />
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-sky-700 text-white mb-3 shadow-xs">
+            <Activity className="w-6 h-6" />
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">MediCare HMS</h1>
-          <p className="text-slate-400 text-sm mt-1">Enterprise Healthcare Operations Portal</p>
+          <h1 className="text-xl font-bold text-white tracking-tight">MediCare HMS</h1>
+          <p className="text-slate-400 text-xs mt-0.5">Clinical & Hospital Management System</p>
         </div>
 
         {/* Login Card */}
-        <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-6 md:p-8 border border-white/20">
-          <h2 className="text-xl font-bold text-slate-900 mb-2">Staff Sign In</h2>
-          <p className="text-xs text-slate-500 mb-6">Enter your authorized credentials to access clinical or administrative tools.</p>
+        <div className="bg-white rounded-xl shadow-lg p-6 border border-slate-200/90">
+          <div className="mb-5 pb-3 border-b border-slate-100">
+            <h2 className="text-base font-bold text-slate-900">Staff Authentication</h2>
+            <p className="text-xs text-slate-500 mt-0.5">Enter authorized clinical or administrative credentials.</p>
+          </div>
 
           {error && (
-            <div className="mb-5 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-sm flex items-start gap-2.5">
-              <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5 text-rose-500" />
+            <div className="mb-4 p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-start gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-rose-600" />
               <span>{error}</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3.5">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                Username or Email
+              <label className="block text-[11px] font-semibold text-slate-700 uppercase tracking-wider mb-1">
+                Username or Staff Email
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <User className="w-4 h-4" />
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                  <User className="w-3.5 h-3.5" />
                 </div>
                 <input
                   type="text"
                   value={identifier}
                   onChange={(e) => setIdentifier(e.target.value)}
-                  placeholder="e.g. admin or doctor@hospital.com"
+                  placeholder="e.g. admin or staff ID"
                   required
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all text-slate-900"
+                  className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-sky-500 focus:bg-white transition text-slate-900"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+              <label className="block text-[11px] font-semibold text-slate-700 uppercase tracking-wider mb-1">
                 Password
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <Lock className="w-4 h-4" />
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                  <Lock className="w-3.5 h-3.5" />
                 </div>
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -102,14 +104,14 @@ const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
                   required
-                  className="w-full pl-10 pr-11 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all text-slate-900"
+                  className="w-full pl-9 pr-9 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-sky-500 focus:bg-white transition text-slate-900"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600"
                 >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                 </button>
               </div>
             </div>
@@ -117,33 +119,33 @@ const Login = () => {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full mt-2 py-3 px-4 rounded-xl bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-500 hover:to-sky-600 text-white font-semibold text-sm shadow-md shadow-sky-600/30 transition-all duration-200 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full mt-2 py-2.5 px-4 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-medium text-xs shadow-xs transition-colors disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
             >
               {submitting ? (
                 <>
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                   <span>Authenticating...</span>
                 </>
               ) : (
-                <span>Access Portal</span>
+                <span>Access Clinical Station</span>
               )}
             </button>
           </form>
 
           {/* Quick Demo Credentials Assistant */}
-          <div className="mt-6 pt-5 border-t border-slate-200">
-            <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2">
-              Default Seed Account
+          <div className="mt-5 pt-4 border-t border-slate-100">
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
+              Workstation Quick Access
             </p>
-            <div className="flex items-center justify-between p-2.5 rounded-lg bg-sky-50 border border-sky-100 text-xs">
+            <div className="flex items-center justify-between p-2 rounded-lg bg-slate-50 border border-slate-200 text-xs">
               <div>
-                <span className="font-semibold text-sky-950">Administrator: </span>
-                <span className="text-sky-800 font-mono">admin</span>
+                <span className="font-semibold text-slate-700 text-[11px]">Default Admin: </span>
+                <span className="text-slate-800 font-mono text-[11px]">admin</span>
               </div>
               <button
                 type="button"
                 onClick={() => handleQuickFill('admin', 'Admin@123456')}
-                className="text-[11px] font-semibold text-sky-700 bg-white border border-sky-200 px-2 py-1 rounded hover:bg-sky-100 transition-colors"
+                className="text-[11px] font-medium text-sky-800 bg-white border border-slate-200 px-2 py-0.5 rounded hover:bg-slate-50 transition-colors"
               >
                 Auto-fill
               </button>
@@ -152,8 +154,8 @@ const Login = () => {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-xs text-slate-500 mt-6">
-          &copy; 2026 MediCare Hospital Management System. All rights reserved.
+        <p className="text-center text-[11px] text-slate-500 mt-4">
+          &copy; 2026 MediCare Hospital Information System • Sri Lanka
         </p>
       </div>
     </div>
