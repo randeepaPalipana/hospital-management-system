@@ -372,11 +372,11 @@ class ReportModel {
     const today = new Date().toISOString().split('T')[0];
     const attendanceSummary = await query(`
       SELECT 
-        attendance_status,
+        status AS attendance_status,
         COUNT(*) AS count
       FROM attendance
       WHERE date = ?
-      GROUP BY attendance_status
+      GROUP BY status
     `, [today]);
 
     // Leave requests summary by status

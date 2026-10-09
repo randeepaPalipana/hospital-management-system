@@ -8,12 +8,13 @@ const { logAudit } = require('../utils/auditLogger');
 class MedicalRecordController {
   static async getMedicalRecords(req, res, next) {
     try {
-      const { patientId, doctorId, limit = 50, page = 1 } = req.query;
+      const { patientId, doctorId, search, limit = 50, page = 1 } = req.query;
       const offset = (parseInt(page, 10) - 1) * parseInt(limit, 10);
 
       const records = await MedicalRecordModel.findAll({
         patientId: patientId ? parseInt(patientId, 10) : null,
         doctorId: doctorId ? parseInt(doctorId, 10) : null,
+        search: search ? search.trim() : null,
         limit: parseInt(limit, 10),
         offset,
       });

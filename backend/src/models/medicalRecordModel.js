@@ -1,7 +1,7 @@
 const { query, transaction } = require('../config/db');
 
 class MedicalRecordModel {
-  static async findAll({ patientId, doctorId, limit = 50, offset = 0 } = {}) {
+  static async findAll({ patientId, doctorId, search, limit = 50, offset = 0 } = {}) {
     let sql = `
       SELECT 
         mr.id, mr.patient_id, mr.doctor_id, mr.appointment_id, mr.encounter_date,
@@ -32,6 +32,11 @@ class MedicalRecordModel {
     if (doctorId) {
       sql += ` AND mr.doctor_id = ?`;
       params.push(doctorId);
+    }
+    if (search) {
+      sql += ` AND (p.mrn LIKE ? OR p.first_name LIKE ? OR p.last_name LIKE ? OR CONCAT(p.first_name, ' ', p.last_name) LIKE ?)`;
+      const term = `%${search}%`;
+      params.push(term, term, term, term);
     }
 
     sql += ` ORDER BY mr.encounter_date DESC LIMIT ? OFFSET ?`;

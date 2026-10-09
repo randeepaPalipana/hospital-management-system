@@ -10,8 +10,7 @@ import PrescriptionModal from '../components/emr/PrescriptionModal';
 
 const MedicalRecords = () => {
   const [records, setRecords] = useState([]);
-  const [patients, setPatients] = useState([]);
-  const [selectedPatient, setSelectedPatient] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -23,14 +22,10 @@ const MedicalRecords = () => {
     setLoading(true);
     setError('');
     try {
-      const [recRes, patRes] = await Promise.all([
-        medicalRecordService.getAll({
-          patientId: selectedPatient || undefined,
-        }),
-        patientService.getAll({ limit: 100 }),
-      ]);
-      setRecords(recRes.data.data || []);
-      setPatients(patRes.data.data || []);
+      const res = await medicalRecordService.getAll({
+        search: searchQuery || undefined,
+      });
+      setRecords(res.data.data || []);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to load medical records');
     } finally {
@@ -39,8 +34,11 @@ const MedicalRecords = () => {
   };
 
   useEffect(() => {
-    fetchRecords();
-  }, [selectedPatient]);
+    const timer = setTimeout(() => {
+      fetchRecords();
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   const handleOpenPrescription = async (prescriptionId) => {
     try {
@@ -73,26 +71,33 @@ const MedicalRecords = () => {
         </button>
       </div>
 
-      {/* Filter Bar */}
+      {/* Filter Bar with Text Box */}
       <div className="bg-white rounded-2xl border border-slate-200 p-4 flex flex-wrap gap-3 items-center justify-between">
-        <div className="flex items-center gap-3 flex-1">
-          <label className="text-xs font-semibold text-slate-600">Filter by Patient:</label>
-          <select
-            value={selectedPatient}
-            onChange={(e) => setSelectedPatient(e.target.value)}
-            className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-sky-500 max-w-sm"
-          >
-            <option value="">All Patient Encounters</option>
-            {patients.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.first_name} {p.last_name} ({p.mrn})
-              </option>
-            ))}
-          </select>
+        <div className="flex items-center gap-3 flex-1 max-w-md">
+          <div className="relative w-full">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              placeholder="Filter by patient name or MRN (e.g. HOSP-2026-00001)..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-10 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs font-bold px-1"
+                title="Clear filter"
+              >
+                ✕
+              </button>
+            )}
+          </div>
         </div>
         <button
           onClick={fetchRecords}
-          className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl"
+          className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition"
           title="Refresh records"
         >
           <RefreshCw className="w-4 h-4" />
