@@ -71,6 +71,43 @@ class PatientController {
       next(err);
     }
   }
+
+  /**
+   * POST /api/v1/patients/:id/documents — Upload document
+   */
+  static async uploadDocument(req, res, next) {
+    try {
+      if (!req.file) {
+        return errorResponse(res, 'No file uploaded', 400);
+      }
+      const { title } = req.body;
+      const doc = await PatientService.uploadDocument(
+        parseInt(req.params.id, 10),
+        req.file,
+        title,
+        req
+      );
+      return successResponse(res, 'Document uploaded successfully', doc, 201);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  /**
+   * DELETE /api/v1/patients/:id/documents/:docId — Delete document
+   */
+  static async deleteDocument(req, res, next) {
+    try {
+      const result = await PatientService.deleteDocument(
+        parseInt(req.params.id, 10),
+        parseInt(req.params.docId, 10),
+        req
+      );
+      return successResponse(res, 'Document removed successfully', result);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = PatientController;

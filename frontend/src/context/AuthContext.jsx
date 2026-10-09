@@ -54,6 +54,35 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Automatic Session Timeout after 30 minutes of inactivity
+  useEffect(() => {
+    if (!token) return;
+
+    const INACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 minutes
+    let timeoutId;
+
+    const resetTimer = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        console.warn('Session timed out due to user inactivity (30m).');
+        localStorage.removeItem('hms_token');
+        localStorage.removeItem('hms_user');
+        setToken(null);
+        setUser(null);
+        window.location.href = '/login?sessionExpired=true';
+      }, INACTIVITY_TIMEOUT);
+    };
+
+    const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+    events.forEach((evt) => window.addEventListener(evt, resetTimer, { passive: true }));
+    resetTimer();
+
+    return () => {
+      clearTimeout(timeoutId);
+      events.forEach((evt) => window.removeEventListener(evt, resetTimer));
+    };
+  }, [token]);
+
   const hasRole = (...roles) => {
     if (!user || !user.role_name) return false;
     return roles.includes(user.role_name);

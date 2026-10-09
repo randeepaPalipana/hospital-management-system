@@ -95,12 +95,64 @@ class PatientService {
       throw err;
     }
 
-    const [appointments, medicalRecords] = await Promise.all([
+    const [appointments, medicalRecords, documents] = await Promise.all([
       PatientModel.getAppointmentHistory(id),
       PatientModel.getMedicalHistory(id),
+      PatientModel.getDocuments(id),
     ]);
 
-    return { patient, appointments, medicalRecords };
+    return { patient, appointments, medicalRecords, documents };
+  }
+
+  /**
+   * Upload and attach document to patient profile
+   */
+  static async uploadDocument(patientId, file, title, req) {
+    const patient = await PatientModel.findById(patientId);
+    if (!patient) {
+      const err = new Error('Patient not found');
+      err.statusCode = 404;
+      throw err;
+    }
+
+    const docId = await PatientModel.addDocument({
+      patient_id: patientId,
+      uploaded_by: req.user.id,
+      title: title || file.originalname,
+      file_path: `/uploads/${file.filename}`,
+      file_type: file.mimetype,
+      file_size_bytes: file.size,
+    });
+
+    await logAudit(req, 'UPLOAD_DOCUMENT', 'patient_documents', docId, {
+      patient_id: patientId,
+      mrn: patient.mrn,
+      title: title || file.originalname,
+      file_path: `/uploads/${file.filename}`,
+    });
+
+    return PatientModel.findDocumentById(docId);
+  }
+
+  /**
+   * Delete a patient document
+   */
+  static async deleteDocument(patientId, docId, req) {
+    const doc = await PatientModel.findDocumentById(docId);
+    if (!doc || doc.patient_id !== Number(patientId)) {
+      const err = new Error('Document not found for this patient');
+      err.statusCode = 404;
+      throw err;
+    }
+
+    await PatientModel.deleteDocument(docId);
+
+    await logAudit(req, 'DELETE_DOCUMENT', 'patient_documents', docId, {
+      patient_id: patientId,
+      title: doc.title,
+    });
+
+    return { success: true };
   }
 }
 

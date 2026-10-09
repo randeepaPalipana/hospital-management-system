@@ -348,6 +348,52 @@ class ReportModel {
       statusDistribution,
     };
   }
+
+  /**
+   * 7. Staff, Attendance & HR Report
+   */
+  static async getStaffReport() {
+    // Headcount by department & designation
+    const departmentBreakdown = await query(`
+      SELECT 
+        d.id AS department_id,
+        d.name AS department_name,
+        COUNT(e.id) AS total_employees,
+        SUM(CASE WHEN e.status = 'active' THEN 1 ELSE 0 END) AS active_employees,
+        COALESCE(AVG(e.salary), 0) AS avg_salary,
+        COALESCE(SUM(e.salary), 0) AS total_payroll
+      FROM departments d
+      LEFT JOIN employees e ON d.id = e.department_id
+      GROUP BY d.id, d.name
+      ORDER BY total_employees DESC
+    `);
+
+    // Today's attendance roster summary
+    const today = new Date().toISOString().split('T')[0];
+    const attendanceSummary = await query(`
+      SELECT 
+        attendance_status,
+        COUNT(*) AS count
+      FROM attendance
+      WHERE date = ?
+      GROUP BY attendance_status
+    `, [today]);
+
+    // Leave requests summary by status
+    const leaveSummary = await query(`
+      SELECT 
+        status,
+        COUNT(*) AS count
+      FROM leave_records
+      GROUP BY status
+    `);
+
+    return {
+      departmentBreakdown,
+      attendanceSummary,
+      leaveSummary,
+    };
+  }
 }
 
 module.exports = ReportModel;

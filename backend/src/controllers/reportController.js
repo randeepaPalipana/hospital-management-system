@@ -63,6 +63,16 @@ class ReportController {
       next(err);
     }
   }
+
+  // 7. Staff & HR Report
+  static async getStaffReport(req, res, next) {
+    try {
+      const report = await ReportModel.getStaffReport();
+      return successResponse(res, 'Staff, attendance, and HR report retrieved', report);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = ReportController;

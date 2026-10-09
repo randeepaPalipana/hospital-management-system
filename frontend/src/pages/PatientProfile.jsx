@@ -3,7 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { patientService } from '../services/patientService';
 import {
   ArrowLeft, User, Phone, Mail, MapPin, Droplet, Calendar, ShieldAlert,
-  AlertTriangle, Activity, ClipboardList, Loader2, PencilLine,
+  AlertTriangle, Activity, ClipboardList, Loader2, PencilLine, FileText,
+  Upload, Trash2, ExternalLink,
 } from 'lucide-react';
 import PatientFormModal from '../components/patients/PatientFormModal';
 
@@ -30,6 +31,10 @@ const PatientProfile = () => {
   const [error, setError] = useState('');
   const [showEdit, setShowEdit] = useState(false);
   const [activeTab, setActiveTab] = useState('appointments');
+  const [uploadTitle, setUploadTitle] = useState('');
+  const [uploadFile, setUploadFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState('');
 
   const fetchHistory = async () => {
     setLoading(true);
@@ -41,6 +46,37 @@ const PatientProfile = () => {
       setError(err.response?.data?.message || 'Failed to load patient profile');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleFileUpload = async (e) => {
+    e.preventDefault();
+    if (!uploadFile) return;
+    setUploading(true);
+    setUploadError('');
+    try {
+      const formData = new FormData();
+      formData.append('document', uploadFile);
+      if (uploadTitle) formData.append('title', uploadTitle);
+
+      await patientService.uploadDocument(id, formData);
+      setUploadTitle('');
+      setUploadFile(null);
+      await fetchHistory();
+    } catch (err) {
+      setUploadError(err.response?.data?.message || 'Failed to upload document');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleDeleteDocument = async (docId) => {
+    if (!window.confirm('Are you sure you want to delete this document?')) return;
+    try {
+      await patientService.deleteDocument(id, docId);
+      await fetchHistory();
+    } catch (err) {
+      alert(err.response?.data?.message || 'Failed to delete document');
     }
   };
 
@@ -56,7 +92,7 @@ const PatientProfile = () => {
     <div className="bg-rose-50 border border-rose-200 rounded-2xl p-6 text-rose-700 text-sm">{error}</div>
   );
 
-  const { patient, appointments, medicalRecords } = history;
+  const { patient, appointments, medicalRecords, documents = [] } = history;
 
   return (
     <div className="space-y-5">
@@ -138,6 +174,7 @@ const PatientProfile = () => {
             {[
               { key: 'appointments', label: 'Appointments', icon: Calendar, count: appointments.length },
               { key: 'records', label: 'Medical Records', icon: ClipboardList, count: medicalRecords.length },
+              { key: 'documents', label: 'Documents & Reports', icon: FileText, count: documents.length },
             ].map((tab) => (
               <button
                 key={tab.key}
@@ -221,6 +258,96 @@ const PatientProfile = () => {
                   ))}
                 </div>
               )
+            )}
+
+            {/* Documents & Reports Tab */}
+            {activeTab === 'documents' && (
+              <div className="space-y-4">
+                {/* Upload Form */}
+                <form onSubmit={handleFileUpload} className="p-4 bg-sky-50/50 border border-sky-100 rounded-xl space-y-3">
+                  <p className="text-xs font-bold text-sky-900 uppercase tracking-wider flex items-center gap-1.5">
+                    <Upload className="w-3.5 h-3.5" /> Upload Medical Document / Report
+                  </p>
+                  {uploadError && (
+                    <p className="text-xs text-rose-600 bg-rose-50 p-2 rounded-lg border border-rose-200">{uploadError}</p>
+                  )}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-medium text-slate-700 mb-1">Document Title / Description</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Discharge Summary, X-Ray Chest, Blood Panel"
+                        value={uploadTitle}
+                        onChange={(e) => setUploadTitle(e.target.value)}
+                        className="w-full text-xs px-3 py-2 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-slate-700 mb-1">Select File (PDF, Images, Docs - max 15MB) *</label>
+                      <input
+                        type="file"
+                        required
+                        onChange={(e) => setUploadFile(e.target.files[0] || null)}
+                        className="w-full text-xs file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-sky-100 file:text-sky-700 hover:file:bg-sky-200 cursor-pointer"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-end">
+                    <button
+                      type="submit"
+                      disabled={uploading || !uploadFile}
+                      className="px-4 py-2 bg-sky-600 hover:bg-sky-500 disabled:opacity-50 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition"
+                    >
+                      {uploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
+                      {uploading ? 'Uploading...' : 'Upload Document'}
+                    </button>
+                  </div>
+                </form>
+
+                {/* Documents List */}
+                {documents.length === 0 ? (
+                  <div className="text-center py-10 text-slate-400">
+                    <FileText className="w-8 h-8 mx-auto mb-2 opacity-40" />
+                    <p className="text-sm font-medium">No uploaded documents or reports for this patient.</p>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {documents.map((doc) => (
+                      <div key={doc.id} className="p-3.5 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white transition flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center shrink-0">
+                            <FileText className="w-4 h-4" />
+                          </div>
+                          <div>
+                            <p className="font-semibold text-slate-900 text-sm">{doc.title}</p>
+                            <p className="text-xs text-slate-500">
+                              Uploaded by {doc.uploaded_by_username || 'Staff'} • {new Date(doc.uploaded_at).toLocaleDateString()} • {(doc.file_size_bytes / 1024).toFixed(1)} KB
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <a
+                            href={doc.file_path}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 flex items-center gap-1 text-xs font-medium"
+                          >
+                            <ExternalLink className="w-3.5 h-3.5" /> View
+                          </a>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteDocument(doc.id)}
+                            className="p-1.5 rounded-lg border border-rose-200 bg-white hover:bg-rose-50 text-rose-600 transition"
+                            title="Delete Document"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             )}
           </div>
         </div>

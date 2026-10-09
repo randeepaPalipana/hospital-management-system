@@ -45,4 +45,11 @@ router.get(
   ReportController.getAppointmentsReport
 );
 
+// Staff, Attendance & HR Analytics (Admin)
+router.get(
+  '/staff',
+  authorize('Administrator'),
+  ReportController.getStaffReport
+);
+
 module.exports = router;

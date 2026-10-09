@@ -37,12 +37,51 @@ router.post(
   PatientController.createPatient
 );
 
+const path = require('path');
+const fs = require('fs');
+const multer = require('multer');
+
+// Configure Multer for patient document uploads
+const uploadDir = path.join(__dirname, '../../../uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, uploadDir),
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const uniqueName = `doc-${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
+    cb(null, uniqueName);
+  },
+});
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 15 * 1024 * 1024 }, // 15MB maximum
+});
+
 // Update patient record
 router.put(
   '/:id',
   authorize('Administrator', 'Receptionist', 'Doctor', 'Nurse'),
   validateUpdatePatient,
   PatientController.updatePatient
+);
+
+// Upload patient document
+router.post(
+  '/:id/documents',
+  authorize('Administrator', 'Doctor', 'Nurse', 'Receptionist'),
+  upload.single('document'),
+  PatientController.uploadDocument
+);
+
+// Delete patient document
+router.delete(
+  '/:id/documents/:docId',
+  authorize('Administrator', 'Doctor', 'Nurse'),
+  PatientController.deleteDocument
 );
 
 module.exports = router;

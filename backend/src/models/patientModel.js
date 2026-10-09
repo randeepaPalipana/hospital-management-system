@@ -198,6 +198,58 @@ class PatientModel {
     `;
     return query(sql, [patientId]);
   }
+
+  /**
+   * Add patient document
+   */
+  static async addDocument({ patient_id, uploaded_by, title, file_path, file_type, file_size_bytes }) {
+    const sql = `
+      INSERT INTO patient_documents (patient_id, uploaded_by, title, file_path, file_type, file_size_bytes)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `;
+    const result = await query(sql, [
+      patient_id,
+      uploaded_by,
+      title,
+      file_path,
+      file_type,
+      file_size_bytes,
+    ]);
+    return result.insertId;
+  }
+
+  /**
+   * Get all documents for a patient
+   */
+  static async getDocuments(patientId) {
+    const sql = `
+      SELECT 
+        pd.id, pd.patient_id, pd.uploaded_by, pd.title, pd.file_path, pd.file_type, pd.file_size_bytes, pd.uploaded_at,
+        u.username AS uploaded_by_username
+      FROM patient_documents pd
+      JOIN users u ON pd.uploaded_by = u.id
+      WHERE pd.patient_id = ?
+      ORDER BY pd.uploaded_at DESC
+    `;
+    return query(sql, [patientId]);
+  }
+
+  /**
+   * Find document by ID
+   */
+  static async findDocumentById(docId) {
+    const sql = `SELECT * FROM patient_documents WHERE id = ? LIMIT 1`;
+    const rows = await query(sql, [docId]);
+    return rows[0] || null;
+  }
+
+  /**
+   * Delete document by ID
+   */
+  static async deleteDocument(docId) {
+    const sql = `DELETE FROM patient_documents WHERE id = ?`;
+    return query(sql, [docId]);
+  }
 }
 
 module.exports = PatientModel;

@@ -4,13 +4,13 @@ import { useAuth } from '../context/AuthContext';
 import {
   BarChart3, DollarSign, Users, Calendar, FlaskConical, Pill,
   TrendingUp, ArrowUpRight, ArrowDownRight, RefreshCw, AlertTriangle,
-  CheckCircle2, Clock, Filter, FileText, PieChart
+  CheckCircle2, Clock, Filter, FileText, PieChart, UserCheck, Briefcase,
 } from 'lucide-react';
 import { formatLKR } from '../utils/currencyFormatter';
 
 const Reports = () => {
   const { hasRole } = useAuth();
-  const [activeTab, setActiveTab] = useState('summary'); // 'summary' | 'financial' | 'patients' | 'clinical' | 'pharmacy'
+  const [activeTab, setActiveTab] = useState('summary'); // 'summary' | 'financial' | 'patients' | 'clinical' | 'pharmacy' | 'staff'
 
   // Summary state
   const [summaryData, setSummaryData] = useState(null);
@@ -33,6 +33,10 @@ const Reports = () => {
   // Pharmacy state
   const [pharmacyData, setPharmacyData] = useState(null);
   const [loadingPharmacy, setLoadingPharmacy] = useState(false);
+
+  // Staff state
+  const [staffData, setStaffData] = useState(null);
+  const [loadingStaff, setLoadingStaff] = useState(false);
 
   const [error, setError] = useState('');
 
@@ -109,12 +113,26 @@ const Reports = () => {
     }
   };
 
+  const fetchStaff = async () => {
+    setLoadingStaff(true);
+    setError('');
+    try {
+      const res = await reportService.getStaffReport();
+      setStaffData(res.data.data);
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to load staff & HR analytics');
+    } finally {
+      setLoadingStaff(false);
+    }
+  };
+
   useEffect(() => {
     if (activeTab === 'summary') fetchSummary();
     if (activeTab === 'financial') fetchFinancial();
     if (activeTab === 'patients') fetchPatients();
     if (activeTab === 'clinical') fetchClinical();
     if (activeTab === 'pharmacy') fetchPharmacy();
+    if (activeTab === 'staff') fetchStaff();
   }, [activeTab]);
 
   return (
@@ -134,6 +152,7 @@ const Reports = () => {
             if (activeTab === 'patients') fetchPatients();
             if (activeTab === 'clinical') fetchClinical();
             if (activeTab === 'pharmacy') fetchPharmacy();
+            if (activeTab === 'staff') fetchStaff();
           }}
           className="inline-flex items-center gap-2 px-3.5 py-2 border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg text-sm font-medium shadow-xs transition self-start sm:self-auto"
         >
@@ -209,6 +228,20 @@ const Reports = () => {
           >
             <Pill className="w-4 h-4" />
             Pharmacy & Formulary
+          </button>
+        )}
+
+        {hasRole('Administrator') && (
+          <button
+            onClick={() => setActiveTab('staff')}
+            className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition whitespace-nowrap -mb-px ${
+              activeTab === 'staff'
+                ? 'border-teal-600 text-teal-600'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
+            }`}
+          >
+            <UserCheck className="w-4 h-4" />
+            Staff & HR Analytics
           </button>
         )}
       </div>
@@ -654,6 +687,111 @@ const Reports = () => {
                     ))}
                   </div>
                 )}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* TAB 6: STAFF & HR ANALYTICS */}
+      {activeTab === 'staff' && (
+        <div className="space-y-6">
+          {loadingStaff ? (
+            <div className="p-12 text-center text-slate-400">Loading staff analytics...</div>
+          ) : !staffData ? null : (
+            <div className="space-y-6">
+              {/* Departmental Headcount & Payroll */}
+              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                  <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <Briefcase className="w-5 h-5 text-teal-600" />
+                    Department Headcount & Payroll Overview
+                  </h3>
+                  <span className="text-xs text-slate-500 font-medium">All hospital clinical & admin units</span>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead>
+                      <tr className="border-b border-slate-200 text-slate-500 uppercase tracking-wider font-semibold">
+                        <th className="py-2.5 px-3">Department</th>
+                        <th className="py-2.5 px-3 text-center">Total Staff</th>
+                        <th className="py-2.5 px-3 text-center">Active</th>
+                        <th className="py-2.5 px-3 text-right">Average Salary</th>
+                        <th className="py-2.5 px-3 text-right">Monthly Payroll</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {staffData.departmentBreakdown.map((dept) => (
+                        <tr key={dept.department_id} className="hover:bg-slate-50/70">
+                          <td className="py-3 px-3 font-semibold text-slate-900">{dept.department_name}</td>
+                          <td className="py-3 px-3 text-center font-mono">{dept.total_employees}</td>
+                          <td className="py-3 px-3 text-center">
+                            <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-semibold font-mono border border-emerald-100">
+                              {dept.active_employees}
+                            </span>
+                          </td>
+                          <td className="py-3 px-3 text-right font-mono font-medium text-slate-700">
+                            {formatLKR(dept.avg_salary)}
+                          </td>
+                          <td className="py-3 px-3 text-right font-mono font-bold text-slate-900">
+                            {formatLKR(dept.total_payroll)}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Attendance & Leave Summaries */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Attendance Summary */}
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+                  <h3 className="text-base font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
+                    <Clock className="w-5 h-5 text-sky-600" />
+                    Today's Attendance Status Breakdown
+                  </h3>
+                  <div className="space-y-3">
+                    {staffData.attendanceSummary.length === 0 ? (
+                      <p className="text-slate-400 text-xs py-4">No attendance roster records marked for today yet.</p>
+                    ) : (
+                      staffData.attendanceSummary.map((att, i) => (
+                        <div key={i} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+                          <span className="font-semibold text-slate-800 text-sm capitalize">
+                            {att.attendance_status.replace('_', ' ')}
+                          </span>
+                          <span className="text-base font-bold font-mono text-slate-900">
+                            {att.count} staff
+                          </span>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+
+                {/* Leave Requests Summary */}
+                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+                  <h3 className="text-base font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center gap-2">
+                    <Calendar className="w-5 h-5 text-indigo-600" />
+                    Leave Applications by Approval Status
+                  </h3>
+                  <div className="space-y-3">
+                    {staffData.leaveSummary.length === 0 ? (
+                      <p className="text-slate-400 text-xs py-4">No leave applications recorded in system.</p>
+                    ) : (
+                      staffData.leaveSummary.map((lv, i) => (
+                        <div key={i} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+                          <span className="font-semibold text-slate-800 text-sm capitalize">
+                            {lv.status}
+                          </span>
+                          <span className="text-base font-bold font-mono text-indigo-700">
+                            {lv.count} requests
+                          </span>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           )}

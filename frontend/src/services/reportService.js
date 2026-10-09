@@ -18,4 +18,7 @@ export const reportService = {
 
   // Appointments & Doctor Utilization
   getAppointmentsReport: (params = {}) => api.get('/reports/appointments', { params }),
+
+  // Staff & HR Analytics
+  getStaffReport: () => api.get('/reports/staff'),
 };
