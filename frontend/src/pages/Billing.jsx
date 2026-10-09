@@ -76,7 +76,7 @@ const Billing = () => {
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-medium text-xs shadow-xs transition-colors"
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-[#0275d8] to-[#0052cc] hover:from-[#0066eb] hover:to-[#0047b3] text-white font-bold text-xs shadow-xs transition cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           Generate Invoice

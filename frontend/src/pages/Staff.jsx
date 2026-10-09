@@ -155,7 +155,7 @@ const Staff = () => {
           {activeTab === 'employees' && hasRole('Administrator') && (
             <button
               onClick={() => { setSelectedEmployee(null); setShowEmployeeModal(true); }}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-medium text-xs shadow-xs transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-[#0275d8] to-[#0052cc] hover:from-[#0066eb] hover:to-[#0047b3] text-white font-bold text-xs shadow-xs transition cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               Add Employee
@@ -164,7 +164,7 @@ const Staff = () => {
           {activeTab === 'leaves' && (
             <button
               onClick={() => setShowLeaveModal(true)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-medium text-xs shadow-xs transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-[#0275d8] to-[#0052cc] hover:from-[#0066eb] hover:to-[#0047b3] text-white font-bold text-xs shadow-xs transition cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               Apply Leave
@@ -177,9 +177,9 @@ const Staff = () => {
       <div className="flex border-b border-slate-200/90 text-xs font-medium">
         <button
           onClick={() => setActiveTab('employees')}
-          className={`flex items-center gap-2 px-4 py-2.5 border-b-2 transition-colors ${
+          className={`flex items-center gap-2 px-4 py-2.5 border-b-2 transition-colors cursor-pointer ${
             activeTab === 'employees'
-              ? 'border-sky-700 text-sky-800 font-semibold'
+              ? 'border-[#0275d8] text-[#0275d8] font-bold'
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >
@@ -188,9 +188,9 @@ const Staff = () => {
         </button>
         <button
           onClick={() => setActiveTab('attendance')}
-          className={`flex items-center gap-2 px-4 py-2.5 border-b-2 transition-colors ${
+          className={`flex items-center gap-2 px-4 py-2.5 border-b-2 transition-colors cursor-pointer ${
             activeTab === 'attendance'
-              ? 'border-sky-700 text-sky-800 font-semibold'
+              ? 'border-[#0275d8] text-[#0275d8] font-bold'
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >
@@ -199,9 +199,9 @@ const Staff = () => {
         </button>
         <button
           onClick={() => setActiveTab('leaves')}
-          className={`flex items-center gap-2 px-4 py-2.5 border-b-2 transition-colors ${
+          className={`flex items-center gap-2 px-4 py-2.5 border-b-2 transition-colors cursor-pointer ${
             activeTab === 'leaves'
-              ? 'border-sky-700 text-sky-800 font-semibold'
+              ? 'border-[#0275d8] text-[#0275d8] font-bold'
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >

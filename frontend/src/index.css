@@ -2,24 +2,27 @@
 
 @layer base {
   :root {
-    --hms-navy: #0f172a;
+    --hms-royal: #0275d8;
+    --hms-royal-dark: #0052cc;
+    --hms-navy: #0a446c;
+    --hms-navy-dark: #073554;
     --hms-border: #e2e8f0;
     --hms-surface: #ffffff;
-    --hms-bg: #f8fafc;
+    --hms-bg: #f4f7fb;
   }
 
   body {
-    background-color: #f8fafc;
-    color: #1e293b;
+    background-color: #f4f7fb;
+    color: #0f172a;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: -0.01em;
   }
 
-  /* Accessible focus ring standards */
+  /* Accessible focus ring standards with royal blue */
   *:focus-visible {
-    outline: 2px solid #0284c7;
+    outline: 2px solid #0275d8;
     outline-offset: 1px;
   }
 

@@ -172,9 +172,9 @@ const Reports = () => {
       <div className="flex border-b border-slate-200/90 gap-2 overflow-x-auto text-xs font-medium">
         <button
           onClick={() => setActiveTab('summary')}
-          className={`flex items-center gap-2 px-3.5 py-2.5 border-b-2 transition whitespace-nowrap ${
+          className={`flex items-center gap-2 px-3.5 py-2.5 border-b-2 transition whitespace-nowrap cursor-pointer ${
             activeTab === 'summary'
-              ? 'border-sky-700 text-sky-800 font-semibold'
+              ? 'border-[#0275d8] text-[#0275d8] font-bold'
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >
@@ -185,9 +185,9 @@ const Reports = () => {
         {hasRole('Administrator', 'Cashier') && (
           <button
             onClick={() => setActiveTab('financial')}
-            className={`flex items-center gap-2 px-3.5 py-2.5 border-b-2 transition whitespace-nowrap ${
+            className={`flex items-center gap-2 px-3.5 py-2.5 border-b-2 transition whitespace-nowrap cursor-pointer ${
               activeTab === 'financial'
-                ? 'border-sky-700 text-sky-800 font-semibold'
+                ? 'border-[#0275d8] text-[#0275d8] font-bold'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
@@ -199,9 +199,9 @@ const Reports = () => {
         {hasRole('Administrator', 'Doctor', 'Nurse') && (
           <button
             onClick={() => setActiveTab('patients')}
-            className={`flex items-center gap-2 px-3.5 py-2.5 border-b-2 transition whitespace-nowrap ${
+            className={`flex items-center gap-2 px-3.5 py-2.5 border-b-2 transition whitespace-nowrap cursor-pointer ${
               activeTab === 'patients'
-                ? 'border-sky-700 text-sky-800 font-semibold'
+                ? 'border-[#0275d8] text-[#0275d8] font-bold'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
@@ -213,9 +213,9 @@ const Reports = () => {
         {hasRole('Administrator', 'Doctor', 'Lab Technician', 'Receptionist') && (
           <button
             onClick={() => setActiveTab('clinical')}
-            className={`flex items-center gap-2 px-3.5 py-2.5 border-b-2 transition whitespace-nowrap ${
+            className={`flex items-center gap-2 px-3.5 py-2.5 border-b-2 transition whitespace-nowrap cursor-pointer ${
               activeTab === 'clinical'
-                ? 'border-sky-700 text-sky-800 font-semibold'
+                ? 'border-[#0275d8] text-[#0275d8] font-bold'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
@@ -227,9 +227,9 @@ const Reports = () => {
         {hasRole('Administrator', 'Pharmacist') && (
           <button
             onClick={() => setActiveTab('pharmacy')}
-            className={`flex items-center gap-2 px-3.5 py-2.5 border-b-2 transition whitespace-nowrap ${
+            className={`flex items-center gap-2 px-3.5 py-2.5 border-b-2 transition whitespace-nowrap cursor-pointer ${
               activeTab === 'pharmacy'
-                ? 'border-sky-700 text-sky-800 font-semibold'
+                ? 'border-[#0275d8] text-[#0275d8] font-bold'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
@@ -241,9 +241,9 @@ const Reports = () => {
         {hasRole('Administrator') && (
           <button
             onClick={() => setActiveTab('staff')}
-            className={`flex items-center gap-2 px-3.5 py-2.5 border-b-2 transition whitespace-nowrap ${
+            className={`flex items-center gap-2 px-3.5 py-2.5 border-b-2 transition whitespace-nowrap cursor-pointer ${
               activeTab === 'staff'
-                ? 'border-sky-700 text-sky-800 font-semibold'
+                ? 'border-[#0275d8] text-[#0275d8] font-bold'
                 : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >

@@ -35,33 +35,36 @@ const Dashboard = () => {
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Header & Workstation Context */}
-      <div className="bg-white border border-slate-200/90 rounded-xl p-5 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
+      <div className="bg-white border border-slate-200/90 rounded-2xl p-5 md:p-6 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 relative overflow-hidden">
+        {/* Subtle decorative spherical bubble in top-right corner mirroring login */}
+        <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-gradient-to-br from-[#0275d8] to-[#0052cc] opacity-10 pointer-events-none" />
+
+        <div className="relative z-10">
+          <div className="flex items-center gap-2 mb-1.5">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#0275d8]">
               Live Clinical Workstation • Shift Status Active
             </span>
           </div>
-          <h1 className="text-xl font-bold text-slate-900 tracking-tight">
+          <h1 className="text-xl md:text-2xl font-extrabold text-slate-900 tracking-tight">
             Hospital Operations Overview
           </h1>
           <p className="text-xs text-slate-500 mt-0.5">
-            Signed in as <span className="font-semibold text-slate-700">{user?.employee_name || user?.username}</span> ({user?.role_name}) • Sri Lanka Health Services Network
+            Signed in as <span className="font-bold text-[#0a446c]">{user?.employee_name || user?.username}</span> ({user?.role_name}) • Sri Lanka Health Services Network
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 relative z-10">
           <button
             onClick={fetchKPIs}
-            className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 rounded-lg text-xs font-medium transition"
+            className="inline-flex items-center gap-2 px-3.5 py-2 bg-gradient-to-r from-[#0275d8] to-[#0052cc] hover:from-[#0066eb] hover:to-[#0047b3] text-white rounded-xl text-xs font-bold shadow-xs transition cursor-pointer"
             title="Refresh Metrics"
           >
-            <RefreshCw className={`w-3.5 h-3.5 text-slate-500 ${loading ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 text-white ${loading ? 'animate-spin' : ''}`} />
             <span>Sync Live</span>
           </button>
           <div className="hidden sm:block text-right border-l border-slate-200 pl-3">
             <span className="text-[11px] text-slate-400 block font-medium">Core Services</span>
-            <span className="text-xs font-semibold text-emerald-700 flex items-center gap-1 justify-end">
+            <span className="text-xs font-bold text-emerald-700 flex items-center gap-1 justify-end">
               <CheckCircle2 className="w-3.5 h-3.5" /> All Online
             </span>
           </div>
@@ -80,20 +83,20 @@ const Dashboard = () => {
         {/* Total Registered Patients */}
         <Link
           to="/patients"
-          className="bg-white p-4 rounded-xl border border-slate-200/90 shadow-xs hover:border-slate-300 transition group flex flex-col justify-between"
+          className="bg-white p-4.5 rounded-2xl border border-slate-200/90 shadow-xs hover:border-[#0275d8]/40 hover:shadow-md transition-all group flex flex-col justify-between"
         >
           <div className="flex items-start justify-between">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Patients Registered</span>
-            <div className="w-8 h-8 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Patients Registered</span>
+            <div className="w-8 h-8 rounded-xl bg-sky-50 text-[#0275d8] flex items-center justify-center border border-sky-100 group-hover:bg-[#0275d8] group-hover:text-white transition-colors">
               <Users className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-2xl font-bold font-mono text-slate-900 tracking-tight">
+            <div className="text-2xl font-extrabold font-mono text-slate-900 tracking-tight">
               {loading ? '—' : summary?.patients?.total_patients || 0}
             </div>
             <div className="text-[11px] text-slate-500 mt-1 flex items-center gap-1">
-              <span className="font-semibold text-sky-700 font-mono">+{summary?.patients?.registered_today || 0}</span>
+              <span className="font-bold text-[#0275d8] font-mono">+{summary?.patients?.registered_today || 0}</span>
               <span>new intakes today</span>
             </div>
           </div>
@@ -102,20 +105,20 @@ const Dashboard = () => {
         {/* Today's Appointments */}
         <Link
           to="/appointments"
-          className="bg-white p-4 rounded-xl border border-slate-200/90 shadow-xs hover:border-slate-300 transition group flex flex-col justify-between"
+          className="bg-white p-4.5 rounded-2xl border border-slate-200/90 shadow-xs hover:border-[#0275d8]/40 hover:shadow-md transition-all group flex flex-col justify-between"
         >
           <div className="flex items-start justify-between">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Today's Appointments</span>
-            <div className="w-8 h-8 rounded-lg bg-sky-50 text-sky-700 flex items-center justify-center">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Today's Appointments</span>
+            <div className="w-8 h-8 rounded-xl bg-sky-50 text-[#0275d8] flex items-center justify-center border border-sky-100 group-hover:bg-[#0275d8] group-hover:text-white transition-colors">
               <Calendar className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-2xl font-bold font-mono text-slate-900 tracking-tight">
+            <div className="text-2xl font-extrabold font-mono text-slate-900 tracking-tight">
               {loading ? '—' : summary?.appointments?.appointments_today || 0}
             </div>
             <div className="text-[11px] text-slate-500 mt-1 flex items-center gap-1">
-              <span className="font-semibold text-sky-700 font-mono">{summary?.appointments?.scheduled_count || 0}</span>
+              <span className="font-bold text-[#0275d8] font-mono">{summary?.appointments?.scheduled_count || 0}</span>
               <span>scheduled in queue</span>
             </div>
           </div>
@@ -124,20 +127,20 @@ const Dashboard = () => {
         {/* Laboratory Queue */}
         <Link
           to="/laboratory"
-          className="bg-white p-4 rounded-xl border border-slate-200/90 shadow-xs hover:border-slate-300 transition group flex flex-col justify-between"
+          className="bg-white p-4.5 rounded-2xl border border-slate-200/90 shadow-xs hover:border-[#0275d8]/40 hover:shadow-md transition-all group flex flex-col justify-between"
         >
           <div className="flex items-start justify-between">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Diagnostic Lab Orders</span>
-            <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Diagnostic Lab Orders</span>
+            <div className="w-8 h-8 rounded-xl bg-sky-50 text-[#0052cc] flex items-center justify-center border border-sky-100 group-hover:bg-[#0052cc] group-hover:text-white transition-colors">
               <FlaskConical className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-2xl font-bold font-mono text-slate-900 tracking-tight">
+            <div className="text-2xl font-extrabold font-mono text-slate-900 tracking-tight">
               {loading ? '—' : summary?.laboratory?.total_lab_orders || 0}
             </div>
             <div className="text-[11px] text-slate-500 mt-1 flex items-center gap-1">
-              <span className="font-semibold text-amber-700 font-mono">{summary?.laboratory?.pending_collection || 0}</span>
+              <span className="font-bold text-amber-700 font-mono">{summary?.laboratory?.pending_collection || 0}</span>
               <span>pending specimen draw</span>
             </div>
           </div>
@@ -254,50 +257,62 @@ const Dashboard = () => {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
           <Link
             to="/patients"
-            className="p-3 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white hover:border-slate-300 transition text-center group"
+            className="p-3.5 rounded-xl border border-slate-200 bg-white hover:border-[#0275d8] hover:shadow-xs transition text-center group"
           >
-            <Users className="w-4 h-4 text-slate-600 group-hover:text-sky-700 mx-auto mb-1.5" />
-            <span className="text-xs font-medium text-slate-800 block">Patients</span>
+            <div className="w-8 h-8 rounded-lg bg-sky-50 text-[#0275d8] flex items-center justify-center mx-auto mb-2 group-hover:bg-[#0275d8] group-hover:text-white transition-colors">
+              <Users className="w-4 h-4" />
+            </div>
+            <span className="text-xs font-semibold text-slate-800 group-hover:text-[#0275d8] block">Patients</span>
           </Link>
 
           <Link
             to="/appointments"
-            className="p-3 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white hover:border-slate-300 transition text-center group"
+            className="p-3.5 rounded-xl border border-slate-200 bg-white hover:border-[#0275d8] hover:shadow-xs transition text-center group"
           >
-            <Calendar className="w-4 h-4 text-slate-600 group-hover:text-sky-700 mx-auto mb-1.5" />
-            <span className="text-xs font-medium text-slate-800 block">Appointments</span>
+            <div className="w-8 h-8 rounded-lg bg-sky-50 text-[#0275d8] flex items-center justify-center mx-auto mb-2 group-hover:bg-[#0275d8] group-hover:text-white transition-colors">
+              <Calendar className="w-4 h-4" />
+            </div>
+            <span className="text-xs font-semibold text-slate-800 group-hover:text-[#0275d8] block">Appointments</span>
           </Link>
 
           <Link
             to="/medical-records"
-            className="p-3 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white hover:border-slate-300 transition text-center group"
+            className="p-3.5 rounded-xl border border-slate-200 bg-white hover:border-[#0275d8] hover:shadow-xs transition text-center group"
           >
-            <Activity className="w-4 h-4 text-slate-600 group-hover:text-sky-700 mx-auto mb-1.5" />
-            <span className="text-xs font-medium text-slate-800 block">EMR Records</span>
+            <div className="w-8 h-8 rounded-lg bg-sky-50 text-[#0275d8] flex items-center justify-center mx-auto mb-2 group-hover:bg-[#0275d8] group-hover:text-white transition-colors">
+              <Activity className="w-4 h-4" />
+            </div>
+            <span className="text-xs font-semibold text-slate-800 group-hover:text-[#0275d8] block">EMR Records</span>
           </Link>
 
           <Link
             to="/laboratory"
-            className="p-3 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white hover:border-slate-300 transition text-center group"
+            className="p-3.5 rounded-xl border border-slate-200 bg-white hover:border-[#0275d8] hover:shadow-xs transition text-center group"
           >
-            <FlaskConical className="w-4 h-4 text-slate-600 group-hover:text-sky-700 mx-auto mb-1.5" />
-            <span className="text-xs font-medium text-slate-800 block">Laboratory</span>
+            <div className="w-8 h-8 rounded-lg bg-sky-50 text-[#0275d8] flex items-center justify-center mx-auto mb-2 group-hover:bg-[#0275d8] group-hover:text-white transition-colors">
+              <FlaskConical className="w-4 h-4" />
+            </div>
+            <span className="text-xs font-semibold text-slate-800 group-hover:text-[#0275d8] block">Laboratory</span>
           </Link>
 
           <Link
             to="/pharmacy"
-            className="p-3 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white hover:border-slate-300 transition text-center group"
+            className="p-3.5 rounded-xl border border-slate-200 bg-white hover:border-[#0275d8] hover:shadow-xs transition text-center group"
           >
-            <Pill className="w-4 h-4 text-slate-600 group-hover:text-sky-700 mx-auto mb-1.5" />
-            <span className="text-xs font-medium text-slate-800 block">Pharmacy</span>
+            <div className="w-8 h-8 rounded-lg bg-sky-50 text-[#0275d8] flex items-center justify-center mx-auto mb-2 group-hover:bg-[#0275d8] group-hover:text-white transition-colors">
+              <Pill className="w-4 h-4" />
+            </div>
+            <span className="text-xs font-semibold text-slate-800 group-hover:text-[#0275d8] block">Pharmacy</span>
           </Link>
 
           <Link
             to="/billing"
-            className="p-3 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white hover:border-slate-300 transition text-center group"
+            className="p-3.5 rounded-xl border border-slate-200 bg-white hover:border-[#0275d8] hover:shadow-xs transition text-center group"
           >
-            <DollarSign className="w-4 h-4 text-slate-600 group-hover:text-sky-700 mx-auto mb-1.5" />
-            <span className="text-xs font-medium text-slate-800 block">Billing</span>
+            <div className="w-8 h-8 rounded-lg bg-sky-50 text-[#0275d8] flex items-center justify-center mx-auto mb-2 group-hover:bg-[#0275d8] group-hover:text-white transition-colors">
+              <DollarSign className="w-4 h-4" />
+            </div>
+            <span className="text-xs font-semibold text-slate-800 group-hover:text-[#0275d8] block">Billing</span>
           </Link>
         </div>
       </div>

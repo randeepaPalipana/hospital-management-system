@@ -71,7 +71,7 @@ const Patients = () => {
         </div>
         <button
           onClick={() => { setEditPatient(null); setShowForm(true); }}
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-medium text-xs shadow-xs transition"
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-[#0275d8] to-[#0052cc] hover:from-[#0066eb] hover:to-[#0047b3] text-white font-bold text-xs shadow-xs transition cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           <span>Register New Patient</span>
@@ -88,12 +88,12 @@ const Patients = () => {
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder="Search by MRN (e.g. HOSP-2026-00001), patient name, or phone..."
-              className="w-full pl-9 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-sky-600 focus:bg-white transition text-slate-800 placeholder-slate-400"
+              className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#0275d8] focus:bg-white transition text-slate-800 placeholder-slate-400"
             />
           </div>
           <button
             type="submit"
-            className="px-3 py-1.5 bg-slate-800 text-white rounded-lg text-xs font-medium hover:bg-slate-900 transition"
+            className="px-4 py-2 bg-[#0a446c] hover:bg-[#073554] text-white rounded-xl text-xs font-bold transition cursor-pointer"
           >
             Search
           </button>

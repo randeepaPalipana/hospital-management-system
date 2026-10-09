@@ -95,7 +95,7 @@ const Pharmacy = () => {
         {isPharmacistOrAdmin && (
           <button
             onClick={() => { setEditMed(null); setShowMedModal(true); }}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-medium text-xs shadow-xs transition-colors"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-[#0275d8] to-[#0052cc] hover:from-[#0066eb] hover:to-[#0047b3] text-white font-bold text-xs shadow-xs transition cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             Register Medication
@@ -107,9 +107,9 @@ const Pharmacy = () => {
       <div className="flex border-b border-slate-200/90 text-xs font-medium">
         <button
           onClick={() => setActiveTab('inventory')}
-          className={`flex items-center gap-2 px-4 py-2.5 border-b-2 transition-colors ${
+          className={`flex items-center gap-2 px-4 py-2.5 border-b-2 transition-colors cursor-pointer ${
             activeTab === 'inventory'
-              ? 'border-sky-700 text-sky-800 font-semibold'
+              ? 'border-[#0275d8] text-[#0275d8] font-bold'
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >
@@ -118,9 +118,9 @@ const Pharmacy = () => {
         </button>
         <button
           onClick={() => setActiveTab('prescriptions')}
-          className={`flex items-center gap-2 px-4 py-2.5 border-b-2 transition-colors ${
+          className={`flex items-center gap-2 px-4 py-2.5 border-b-2 transition-colors cursor-pointer ${
             activeTab === 'prescriptions'
-              ? 'border-sky-700 text-sky-800 font-semibold'
+              ? 'border-[#0275d8] text-[#0275d8] font-bold'
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >
@@ -129,9 +129,9 @@ const Pharmacy = () => {
         </button>
         <button
           onClick={() => setActiveTab('expiring')}
-          className={`flex items-center gap-2 px-4 py-2.5 border-b-2 transition-colors ${
+          className={`flex items-center gap-2 px-4 py-2.5 border-b-2 transition-colors cursor-pointer ${
             activeTab === 'expiring'
-              ? 'border-rose-700 text-rose-800 font-semibold'
+              ? 'border-rose-600 text-rose-700 font-bold'
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >

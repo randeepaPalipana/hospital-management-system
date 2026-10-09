@@ -94,7 +94,7 @@ const Appointments = () => {
         </div>
         <button
           onClick={() => setShowBookModal(true)}
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-medium text-xs shadow-xs transition-colors"
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-[#0275d8] to-[#0052cc] hover:from-[#0066eb] hover:to-[#0047b3] text-white font-bold text-xs shadow-xs transition cursor-pointer"
         >
           <Plus className="w-4 h-4" />
           Book Consultation
@@ -117,7 +117,7 @@ const Appointments = () => {
 
           <button
             onClick={setFilterToday}
-            className="px-2.5 py-1.5 rounded-lg border border-sky-300 bg-sky-50 text-sky-800 text-xs font-medium hover:bg-sky-100 transition-colors"
+            className="px-3 py-1.5 rounded-lg border border-[#0275d8]/30 bg-sky-50 text-[#0275d8] text-xs font-bold hover:bg-[#0275d8] hover:text-white transition-colors cursor-pointer"
           >
             Today's Queue
           </button>
