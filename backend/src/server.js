@@ -19,9 +19,10 @@ async function startServer() {
     console.warn('👉 Please verify your backend/.env database credentials (DB_USER, DB_PASSWORD).');
   }
 
-  const server = app.listen(PORT, () => {
-    console.log(`🚀 HMS Backend API running on: http://localhost:${PORT}`);
-    console.log(`💓 Health Check: http://localhost:${PORT}/api/v1/health`);
+  const HOST = '0.0.0.0';
+  const server = app.listen(PORT, HOST, () => {
+    console.log(`🚀 HMS Backend API running on: http://${HOST}:${PORT}`);
+    console.log(`💓 Health Check: http://${HOST}:${PORT}/api/v1/health`);
     console.log('----------------------------------------------------');
   });
 
