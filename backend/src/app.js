@@ -84,8 +84,8 @@ app.use('/api', apiLimiter);
 // Static uploads directory
 app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
 
-// Health check endpoint
-app.get('/api/v1/health', (req, res) => {
+// Health check endpoints
+const handleHealthCheck = (req, res) => {
   return successResponse(res, 'Hospital Management System API is running smoothly', {
     status: 'UP',
     timestamp: new Date().toISOString(),
@@ -93,7 +93,11 @@ app.get('/api/v1/health', (req, res) => {
     version: '1.0.0',
     environment: process.env.NODE_ENV || 'development',
   });
-});
+};
+
+app.get('/api/v1/health', handleHealthCheck);
+app.get('/api/health', handleHealthCheck);
+app.get('/health', handleHealthCheck);
 
 // Route Handlers
 const authRoutes = require('./routes/authRoutes');
