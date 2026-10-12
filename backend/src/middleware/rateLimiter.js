@@ -3,13 +3,13 @@ const { errorResponse } = require('../utils/responseFormatter');
 
 /**
  * Global API rate limiter:
- * 100 requests per 15-minute window for standard endpoints
+ * 1000 requests per 15-minute window for standard endpoints
  */
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 300, // Limit each IP to 300 requests per 15 minutes
-  standardHeaders: true, // Return rate limit info in `RateLimit-*` headers
-  legacyHeaders: false, // Disable `X-RateLimit-*` headers
+  max: 1000, // Generous limit for single-page dashboard queries
+  standardHeaders: true,
+  legacyHeaders: false,
   handler: (req, res) => {
     return errorResponse(
       res,
@@ -21,14 +21,12 @@ const apiLimiter = rateLimit({
 });
 
 /**
- * Stricter Rate Limiter for Authentication / Login & Password changes
- * Defends against brute-force password guessing attacks:
- * Max 10 attempts per 15 minutes per IP
+ * Rate Limiter for Authentication / Login & Password changes
  */
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: process.env.NODE_ENV === 'production' ? 15 : 100, // 100 in dev/testing, 15 in prod
-  skipSuccessfulRequests: true, // Only count failed login attempts towards brute force limit!
+  max: 60, // 60 attempts per 15 mins
+  skipSuccessfulRequests: true, // Only count failed login attempts towards brute force limit
   standardHeaders: true,
   legacyHeaders: false,
   handler: (req, res) => {
