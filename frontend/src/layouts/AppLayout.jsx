@@ -134,9 +134,6 @@ const AppLayout = () => {
         {/* Brand Header */}
         <div className="h-16 flex items-center justify-between px-4 border-b border-[#0a446c]/80 bg-[#062c46]">
           <div className="flex items-center gap-3 overflow-hidden">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#0275d8] to-[#0052cc] text-white flex items-center justify-center font-bold flex-shrink-0 shadow-md border border-white/20">
-              <Activity className="w-5 h-5 text-white" />
-            </div>
             {sidebarOpen && (
               <div className="flex flex-col min-w-0">
                 <span className="font-extrabold text-sm text-white tracking-tight leading-tight truncate">Hospital Management System</span>
@@ -219,12 +216,7 @@ const AppLayout = () => {
           <div className="fixed inset-0 bg-[#073554]/80 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
           <div className="relative flex-1 flex flex-col max-w-xs w-full bg-[#073554] text-white p-4">
             <div className="flex items-center justify-between pb-4 border-b border-[#0a446c] mb-4">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#0275d8] to-[#0052cc] flex items-center justify-center">
-                  <Activity className="w-5 h-5 text-white" />
-                </div>
-                <span className="font-extrabold text-base">Hospital Management System</span>
-              </div>
+              <span className="font-extrabold text-base">Hospital Management System</span>
               <button onClick={() => setMobileMenuOpen(false)} className="p-1 text-sky-200 hover:text-white">
                 <X className="w-6 h-6" />
               </button>
