@@ -4,13 +4,13 @@ An enterprise-grade, full-stack Hospital Management System developed in accordan
 
 ---
 
-## 🏥 Project Overview
+## Project Overview
 
 The **Hospital Management System (HMS)** centralizes and automates hospital operations across clinical, administrative, and financial functions. It provides a secure, role-based platform for managing patient records, appointments, doctor schedules, electronic medical records (EMR), laboratory workflows, pharmacy dispensing, inpatient/outpatient admissions, and consolidated billing.
 
 ---
 
-## 👥 User Roles (RBAC)
+## User Roles (RBAC)
 
 The system enforces strict **Role-Based Access Control** across 7 primary roles:
 1. **Administrator**: System administration, user access, employee HR, departments, audit logging, and institutional reporting.
@@ -23,7 +23,7 @@ The system enforces strict **Role-Based Access Control** across 7 primary roles:
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 A robust 4-tier layered architecture designed for security, scalability, and maintainability:
 
@@ -39,7 +39,7 @@ Database Layer (MySQL 8.0 InnoDB Engine + Automated Backups)
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 SLT/
@@ -54,7 +54,7 @@ SLT/
 
 ---
 
-## 🌿 Git Workflow & Branch Strategy
+## Git Workflow & Branch Strategy
 
 This project adheres to a professional Git workflow:
 - **`main`**: Production-ready, stable releases only.
@@ -70,7 +70,7 @@ This project adheres to a professional Git workflow:
 
 ---
 
-## ⚙️ Prerequisites
+## Prerequisites
 
 - **Node.js**: v18.0.0 or higher (v22.x LTS recommended)
 - **npm**: v9.0.0 or higher
@@ -79,5 +79,3 @@ This project adheres to a professional Git workflow:
 
 ---
 
-## 📄 License
-Proprietary healthcare software — developed for authorized hospital operations.
