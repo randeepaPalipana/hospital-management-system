@@ -48,7 +48,14 @@ function App() {
             <Route path="appointments" element={<Appointments />} />
             <Route path="medical-records" element={<MedicalRecords />} />
             <Route path="laboratory" element={<Laboratory />} />
-            <Route path="pharmacy" element={<Pharmacy />} />
+            <Route
+              path="pharmacy"
+              element={
+                <ProtectedRoute allowedRoles={['Administrator', 'Pharmacist']}>
+                  <Pharmacy />
+                </ProtectedRoute>
+              }
+            />
             <Route path="billing" element={<Billing />} />
             <Route path="staff" element={<Staff />} />
             <Route path="reports" element={<Reports />} />

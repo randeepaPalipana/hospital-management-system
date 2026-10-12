@@ -80,7 +80,7 @@ const AppLayout = () => {
       label: 'Pharmacy',
       path: '/pharmacy',
       icon: Pill,
-      roles: ['Administrator', 'Pharmacist', 'Doctor'],
+      roles: ['Administrator', 'Pharmacist'],
     },
     {
       label: 'Billing & Invoices',
@@ -139,7 +139,7 @@ const AppLayout = () => {
             </div>
             {sidebarOpen && (
               <div className="flex flex-col min-w-0">
-                <span className="font-extrabold text-sm text-white tracking-tight leading-tight truncate">MediCare HMS</span>
+                <span className="font-extrabold text-sm text-white tracking-tight leading-tight truncate">Hospital Management System</span>
                 <span className="text-[11px] text-sky-200 font-medium tracking-normal truncate">General Hospital LK</span>
               </div>
             )}
@@ -223,7 +223,7 @@ const AppLayout = () => {
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#0275d8] to-[#0052cc] flex items-center justify-center">
                   <Activity className="w-5 h-5 text-white" />
                 </div>
-                <span className="font-extrabold text-lg">MediCare HMS</span>
+                <span className="font-extrabold text-base">Hospital Management System</span>
               </div>
               <button onClick={() => setMobileMenuOpen(false)} className="p-1 text-sky-200 hover:text-white">
                 <X className="w-6 h-6" />

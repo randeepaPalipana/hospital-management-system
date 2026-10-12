@@ -63,7 +63,7 @@ const Login = () => {
           <div className="relative z-10 max-w-sm space-y-3">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-xs text-xs font-semibold tracking-wider uppercase mb-1">
               <Activity className="w-4 h-4 text-sky-200" />
-              <span>MediCare HMS</span>
+              <span>Hospital Management System</span>
             </div>
             <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight text-white uppercase">
               Welcome
@@ -167,10 +167,11 @@ const Login = () => {
               </div>
 
               {/* Primary Sign In Button */}
+              {/* Primary Sign In Button */}
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-3.5 px-4 rounded-xl bg-[#0a446c] hover:bg-[#073554] text-white font-bold text-sm tracking-wide shadow-md transition-all duration-150 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer mt-2"
+                className="w-full py-3.5 px-4 rounded-xl bg-[#0a446c] hover:bg-[#073554] text-white font-bold text-sm tracking-wide shadow-md transition-all duration-150 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer mt-4"
               >
                 {submitting ? (
                   <>
@@ -181,71 +182,11 @@ const Login = () => {
                   <span>Sign in</span>
                 )}
               </button>
-
-              {/* Or separator */}
-              <div className="relative flex py-1 items-center">
-                <div className="flex-grow border-t border-slate-200"></div>
-                <span className="flex-shrink mx-3 text-slate-400 text-xs">Or</span>
-                <div className="flex-grow border-t border-slate-200"></div>
-              </div>
-
-              {/* Secondary Button ("Sign in with other") */}
-              <button
-                type="button"
-                onClick={() => handleQuickFill('admin', 'Admin@123456')}
-                className="w-full py-3 px-4 rounded-xl border border-slate-800 bg-white hover:bg-slate-50 text-slate-800 font-semibold text-xs tracking-wide transition-colors flex items-center justify-center cursor-pointer"
-              >
-                Sign in with other (Demo Admin)
-              </button>
             </form>
 
-            {/* Quick Seed Credentials Assistant (Role Chips) */}
-            <div className="mt-5 pt-4 border-t border-slate-100">
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 text-center">
-                Quick Role Autofill (Sri Lanka Seed Roster)
-              </p>
-              <div className="flex flex-wrap gap-1.5 justify-center text-[10px]">
-                <button
-                  type="button"
-                  onClick={() => handleQuickFill('admin', 'Admin@123456')}
-                  className="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-sky-100 text-slate-700 hover:text-sky-800 border border-slate-200 font-medium transition-colors"
-                >
-                  Admin
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleQuickFill('doc_senarathne', 'Doctor@123456')}
-                  className="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-sky-100 text-slate-700 hover:text-sky-800 border border-slate-200 font-medium transition-colors"
-                >
-                  Dr. Senarathne
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleQuickFill('nurse_silva', 'Nurse@123456')}
-                  className="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-sky-100 text-slate-700 hover:text-sky-800 border border-slate-200 font-medium transition-colors"
-                >
-                  Nurse Silva
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleQuickFill('pharm_perera', 'Pharm@123456')}
-                  className="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-sky-100 text-slate-700 hover:text-sky-800 border border-slate-200 font-medium transition-colors"
-                >
-                  Pharmacist
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleQuickFill('cashier_fernando', 'Cashier@123456')}
-                  className="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-sky-100 text-slate-700 hover:text-sky-800 border border-slate-200 font-medium transition-colors"
-                >
-                  Cashier
-                </button>
-              </div>
-            </div>
-
             {/* Bottom Account Line */}
-            <p className="text-center text-xs text-slate-400 mt-5">
-              Authorized personnel only • <span className="text-sky-700 font-semibold cursor-pointer" onClick={() => handleQuickFill('admin', 'Admin@123456')}>Staff Support</span>
+            <p className="text-center text-xs text-slate-400 mt-6">
+              Authorized hospital personnel only
             </p>
           </div>
         </div>
